@@ -236,3 +236,38 @@ function list_linkbacks( $args, $comments ) {
 	}
 	return $return;
 }
+
+
+/**
+	 * Loads a template file
+	 *
+	 * Looks for the file in these directories, in this order:
+	 * 		Current theme semantic-linkbacks folder
+	 * 		Parent theme semantic-linkbacks folder
+	 * 		This plugin
+	 *
+	 * To use a custom template in a theme, copy the
+	 * file from public/templates into a templates folder in your
+	 * theme. Customize as needed, but keep the file name as-is. The
+	 * plugin will automatically use your custom template file instead
+	 * of the ones included in the plugin.
+	 *
+	 * @param 	string 		$name 			The name of a template file
+	 */
+ 	function semantic_linkbacks_load_template( $name ) {
+
+ 		$template = '';
+
+		$locations[] = "/semantic-linkbacks/{$name}.php";
+		apply_filters( 'semantic-linkbacks-template-paths', $locations );
+
+		$template = locate_template( $locations, false );
+
+		if ( empty( $template ) ) {
+			$template = plugin_dir_path( dirname( __FILE__ ) ) . 'templates/' . $name . '.php';
+		}
+
+		load_template( $template );
+
+ 	} // semantic_linkbacks_load_template()
+
