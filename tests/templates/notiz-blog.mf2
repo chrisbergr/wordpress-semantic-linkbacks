@@ -1,0 +1,1432 @@
+{
+    "items": [
+        {
+            "type": [
+                "h-entry"
+            ],
+            "properties": {
+                "name": [
+                    "Microformats: The next generation"
+                ],
+                "url": [
+                    "https://notiz.blog/2012/07/03/microformats-the-next-generation/",
+                    "https://notiz.blog/2012/07/03/microformats-the-next-generation/",
+                    "https://notiz.blog/b/1CP",
+                    "https://notiz.blog/2012/07/03/microformats-the-next-generation/"
+                ],
+                "uid": [
+                    "https://notiz.blog/2012/07/03/microformats-the-next-generation/"
+                ],
+                "updated": [
+                    "2012-07-03T08:43:02+00:00"
+                ],
+                "published": [
+                    "2012-07-03T08:43:02+00:00"
+                ],
+                "content": [
+                    {
+                        "html": "<figure class=\"wp-block-image alignright\" style=\"max-width:50%\"><img src=\"https://notiz.blog/wp-content/uploads/2007/03/mf-white.png\" alt=\"mf-white\"></figure>\n\n<p><a href=\"http://microformats.org/2012/06/25/microformats-org-at-7\">microformats.org wird 7</a>&#x2026; Alles Gute!</p>\n\n<p>Zur Feier des Tages hat sich Frances Berriman die M&#xFC;he gemacht, die letzten 7 Jahre zusammen zu fassen und einen Ausblick auf die kommenden &#xC4;nderungen zu geben.</p>\n\n<p>Da ich, seit ich bloggen kann, schon <a href=\"https://notiz.blog/tag/microformats/\">&#xFC;ber Microformats berichte</a>, will ich den R&#xFC;ckblick nicht weiter kommentieren und nur auf die kommende Weiterentwicklung ein wenig eingehen.</p>\n\n<h2>Microformats und HTML5</h2>\n\n<p>Seit dem ich das letzte mal <a href=\"https://notiz.blog/2008/07/30/html5-is-made-for-microformats/\">&#xFC;ber diese Kombination geschrieben habe</a>, hat sich leider nicht viel ge&#xE4;ndert&#x2026; Die Microformats Community weigert sich weiterhin auf Microdata oder RDFa \"upzugraden\" und h&#xE4;lt krampfhaft an den semantischen <code>classes</code> fest. Nichtsdestotrotz macht HTML5 mit <code>&lt;time /&gt;</code> und <code>&lt;data /&gt;</code> dem leidigen Thema <a href=\"https://notiz.blog/2009/05/12/microformats-value-class-pattern/\"><code>abbr-design-pattern</code> bzw. <code>value-class-pattern</code></a> ein Ende. Statt Meta-Informationen umst&#xE4;ndlich in HTML-Attributen zu verwurschteln, k&#xF6;nnen Termine und GEO Daten bald sauber dargestellt werden:</p>\n\n<pre class=\"wp-block-code\"><code>&lt;time class=\"dtstart\" datetime=\"2006-09-23\"&gt;a Saturday&lt;/time&gt;\n...\n&lt;data class=\"geo\" value=\"37.386013;-122.082932\" &gt;Mountain View&lt;/data&gt;</code></pre>\n\n<p>Immerhin! Mehr dazu im <a href=\"http://microformats.org/wiki/html5\">microformats-wiki</a>.</p>\n\n<h2>Namespaces</h2>\n\n<p>Die wohl gr&#xF6;&#xDF;ten Ver&#xE4;nderungen sind aber die geplanten <a href=\"http://microformats.org/wiki/microformats-2#distinguishing_properties_from_other_classes\">Pseudo-Namespaces</a> welche haupts&#xE4;chlich das Parsen von Microformats vereinfachen sollen. Microformats waren bisher sehr fehleranf&#xE4;llig, da sie sich die <code>class</code>-Attribute mit CSS und JavaScript zu teilen hatten. Es besteht immer die Gefahr dass rein f&#xFC;r CSS genutzte Attribute f&#xE4;lschlicherweise f&#xFC;r Microformats genutzt wurden oder dass die semantischen Class-Names einem Re-Design zum Opfer fielen. Die Prefixes '<code>h-</code>', '<code>p-</code>', '<code>u-</code>', '<code>dt-</code>' und '<code>e-</code>' sollen das Zuk&#xFC;nftig verhindern und ein generisches parsen erm&#xF6;glichen.</p>\n\n<h3>'<code>h-</code>' kennzeichnet einen Microformats-Container</h3>\n\n<p>Bisher ist die Microformats Community etwas inkonsequent mit der Benennung ihrer Formate&#x2026; Mal mit beginnendem \"v\", mal mit \"h\" und in seltenen F&#xE4;llen auch ohne oder mit anderem Buchstaben:</p>\n\n<ul>\n    <li>hCard: <code>class=\"vcard\"</code>\n</li>\n    <li>hAtom: <code>class=\"hfeed\"</code>\n</li>\n    <li>adr: <code>class=\"adr\"</code>\n</li>\n    <li>xFolk: <code>class=\"xfolkentry\"</code>\n</li>\n    <li>XOXO: <code>class=\"xoxo\"</code>\n</li>\n</ul>\n\n<p>Mit den Prefixes soll das jetzt alles vereinheitlicht werden:</p>\n\n<ul>\n    <li>hCard: <code>class=\"h-card\"</code>\n</li>\n    <li>hAtom: <code>class=\"h-feed\"</code>\n</li>\n    <li>adr: <code>class=\"h-adr\"</code>\n</li>\n</ul>\n\n<h3>'<code>p-</code>' zeichnet <em>Properties</em> aus</h3>\n\n<p>Die mit '<code>p-</code>' gekennzeichnet Properties sollten, wenn nicht expliziert definiert, als Plain-Text interpretiert werden (kein HTML). Ein klassisches Property ist beispielsweise der Name einer Person:</p>\n\n<pre class=\"wp-block-code\"><code>&lt;div class=\"h-card\"&gt;\n &lt;span class=\"p-fn\"&gt;Tantek &#xC7;elik&lt;/span&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>'<code>e-</code>' zeichnet <em>Rich Text</em> aus</h3>\n\n<p>Das '<code>e-</code>' Prefix k&#xF6;nnte als Abk&#xFC;rzung f&#xFC;r \"element tree\", \"embedded markup\", oder \"encapsulated markup\" stehen und kann im Gegansatz zu den Properties auch HTML-Code beinhalten. In hAtom k&#xF6;nnte der <code>entry-content</code> zu <code>e-entry-content</code> und bei der hReview die <code>description</code> zur <code>e-description</code> werden.</p>\n\n<h3>'<code>dt-</code>' f&#xFC;r DateTime und '<code>u-</code>' f&#xFC;r URL</h3>\n\n<p>Aus <code>dtstart</code> wird <code>dt-start</code> und alle URL-Felder bekommen ein vorgestelltes '<code>u-</code>':</p>\n\n<pre class=\"wp-block-code\"><code>&lt;a class=\"u-url\" href=\"...\"&gt;...&lt;/a&gt;\n\n&lt;img class=\"u-photo\" src=\"...\" /&gt;</code></pre>\n\n<p>Die URL kann in bestimmten Situtionen auch weg fallen, dazu aber im n&#xE4;chsten Beispiel mehr&#x2026;</p>\n\n<h2>Simpel und unabh&#xE4;ngig vom Format</h2>\n\n<p>Zuk&#xFC;nftig soll es auch nicht mehr so umst&#xE4;ndlich sein Informationen semantisch auszuzeichnen. Will man derzeit einen simplen Link mit einer <a href=\"http://microformats.org/wiki/hcard\">hCard</a> versehen, muss man ihn wie folgt aufbl&#xE4;hen:</p>\n\n<pre class=\"wp-block-code\"><code>&lt;div class=\"vcard\"&gt;\n &lt;a class=\"url fn\" href=\"http://tantek.com/\"&gt;Tantek &#xC7;elik&lt;/a&gt;\n&lt;/div&gt;</code></pre>\n\n<p>Nach der &#xDC;berarbeitung soll folgendes reichen:</p>\n\n<pre class=\"wp-block-code\"><code>&lt;a class=\"h-card\" href=\"http://tantek.com/\"&gt;Tantek &#xC7;elik&lt;/a&gt;</code></pre>\n\n<p>Dabei gilt die Regel: Wenn es sich bei (z.B.) einer vCard um einen Link oder ein Bild handelt, kann man auf '<code>u-*</code>' und '<code>p-name</code>' verzichten&#x2026; so ungef&#xE4;r zumindest &#x1F609;</p>\n\n<p>Mehr dazu im Microformats-Wiki: <a href=\"http://microformats.org/wiki/microformats-2-implied-properties\">implied properties</a></p>\n\n<p>Au&#xDF;erdem kommt mit v2 eine Anleitung wie Microformats auf andere Formate wie JSON gemappt werden sollen. Aus&#x2026;</p>\n\n<pre class=\"wp-block-code\"><code>&lt;a class=\"h-card\" href=\"http://benward.me\"&gt;Ben Ward&lt;/a&gt;</code></pre>\n\n<p>wird&#x2026;</p>\n\n<pre class=\"wp-block-code\"><code>[{\n  \"type\": [\"h-card\"],\n  \"properties\": {\n    \"name\": [\"Frances Berriman\"] \n  }\n}]</code></pre>\n\n<h2>Fazit</h2>\n\n<p>Ich bin mir noch nicht ganz sicher was ich von den geplanten &#xC4;nderungen halten soll&#x2026; die Nutzung der neuen HTML5 Tags und die Vereinfachung und Vereinheitlichung der Formate finde ich gut und notwendig&#x2026; Auch eine einheitliche Regel, wie Microformats in anderen Formaten abgebildet werden sollen (z.B. JSON) macht durchaus Sinn (warum das Sinn macht, <a href=\"http://microformats.org/wiki/JSON\">hier</a>)&#x2026; aber den Pseudo-Namespaces kann ich bisher nichts abgewinnen! Der \"Namespace\" sorgt zwar f&#xFC;r mehr Qualit&#xE4;t beim Parsen der Microformats, aber auf Kosten des semantischen HTMLs.</p>\n\n<p>Microformats sollten weiterhin f&#xFC;r sch&#xF6;nes, semantisches HTML sorgen und mehr nicht. Geht es um maschinenlesbaren Code, sollte man mit der Zeit gehen und auf <a href=\"https://notiz.blog/2009/06/18/microdata-semantisches-html5/\">Microdata</a> oder <a href=\"https://notiz.blog/2009/07/16/rdfa-wird-wohl-doch-in-html5-integriert/\">RDFa</a> setzen. Ob man seinen Quelltext an Microformats v2 anpasst oder mit <a href=\"http://schema.org/\">Schema.org</a> auszeichnet sollte kaum mehr Aufwand sein.</p>\n\n<p>&#x2026;&#xDC;brigens: Wer noch mehr &#xFC;ber die Vorteile von Microdata gegen&#xFC;ber Microformats lesen will, sollte sich die <a href=\"https://notiz.blog/2011/06/21/pfefferles-openweb-microformats-v2/\">Ausgabe 10 des Webstandards-Magazin</a> durchlesen oder die Reihe \"<a href=\"https://notiz.blog/2009/08/10/microdata-wie-microformats-bloss-besser-teil-1/\">Microdata &#x2013; wie Microformats blo&#xDF; besser&#x2026;</a>\" hier im Blog!</p>",
+                        "value": "mf-white\nmicroformats.org wird 7\u2026 Alles Gute!\nZur Feier des Tages hat sich Frances Berriman die M\u00fche gemacht, die letzten 7 Jahre zusammen zu fassen und einen Ausblick auf die kommenden \u00c4nderungen zu geben.\nDa ich, seit ich bloggen kann, schon \u00fcber Microformats berichte, will ich den R\u00fcckblick nicht weiter kommentieren und nur auf die kommende Weiterentwicklung ein wenig eingehen. Microformats und HTML5\nSeit dem ich das letzte mal \u00fcber diese Kombination geschrieben habe, hat sich leider nicht viel ge\u00e4ndert\u2026 Die Microformats Community weigert sich weiterhin auf Microdata oder RDFa \"upzugraden\" und h\u00e4lt krampfhaft an den semantischen classes fest. Nichtsdestotrotz macht HTML5 mit <time /> und <data /> dem leidigen Thema abbr-design-pattern bzw. value-class-pattern ein Ende. Statt Meta-Informationen umst\u00e4ndlich in HTML-Attributen zu verwurschteln, k\u00f6nnen Termine und GEO Daten bald sauber dargestellt werden: <time class=\"dtstart\" datetime=\"2006-09-23\">a Saturday</time> ... <data class=\"geo\" value=\"37.386013;-122.082932\" >Mountain View</data>\nImmerhin! Mehr dazu im microformats-wiki. Namespaces\nDie wohl gr\u00f6\u00dften Ver\u00e4nderungen sind aber die geplanten Pseudo-Namespaces welche haupts\u00e4chlich das Parsen von Microformats vereinfachen sollen. Microformats waren bisher sehr fehleranf\u00e4llig, da sie sich die class-Attribute mit CSS und JavaScript zu teilen hatten. Es besteht immer die Gefahr dass rein f\u00fcr CSS genutzte Attribute f\u00e4lschlicherweise f\u00fcr Microformats genutzt wurden oder dass die semantischen Class-Names einem Re-Design zum Opfer fielen. Die Prefixes 'h-', 'p-', 'u-', 'dt-' und 'e-' sollen das Zuk\u00fcnftig verhindern und ein generisches parsen erm\u00f6glichen. 'h-' kennzeichnet einen Microformats-Container\nBisher ist die Microformats Community etwas inkonsequent mit der Benennung ihrer Formate\u2026 Mal mit beginnendem \"v\", mal mit \"h\" und in seltenen F\u00e4llen auch ohne oder mit anderem Buchstaben: hCard: class=\"vcard\" hAtom: class=\"hfeed\" adr: class=\"adr\" xFolk: class=\"xfolkentry\" XOXO: class=\"xoxo\"\nMit den Prefixes soll das jetzt alles vereinheitlicht werden: hCard: class=\"h-card\" hAtom: class=\"h-feed\" adr: class=\"h-adr\" 'p-' zeichnet Properties aus\nDie mit 'p-' gekennzeichnet Properties sollten, wenn nicht expliziert definiert, als Plain-Text interpretiert werden (kein HTML). Ein klassisches Property ist beispielsweise der Name einer Person: <div class=\"h-card\"> <span class=\"p-fn\">Tantek \u00c7elik</span> </div> 'e-' zeichnet Rich Text aus\nDas 'e-' Prefix k\u00f6nnte als Abk\u00fcrzung f\u00fcr \"element tree\", \"embedded markup\", oder \"encapsulated markup\" stehen und kann im Gegansatz zu den Properties auch HTML-Code beinhalten. In hAtom k\u00f6nnte der entry-content zu e-entry-content und bei der hReview die description zur e-description werden. 'dt-' f\u00fcr DateTime und 'u-' f\u00fcr URL\nAus dtstart wird dt-start und alle URL-Felder bekommen ein vorgestelltes 'u-': <a class=\"u-url\" href=\"...\">...</a> <img class=\"u-photo\" src=\"...\" />\nDie URL kann in bestimmten Situtionen auch weg fallen, dazu aber im n\u00e4chsten Beispiel mehr\u2026 Simpel und unabh\u00e4ngig vom Format\nZuk\u00fcnftig soll es auch nicht mehr so umst\u00e4ndlich sein Informationen semantisch auszuzeichnen. Will man derzeit einen simplen Link mit einer hCard versehen, muss man ihn wie folgt aufbl\u00e4hen: <div class=\"vcard\"> <a class=\"url fn\" href=\"http://tantek.com/\">Tantek \u00c7elik</a> </div>\nNach der \u00dcberarbeitung soll folgendes reichen: <a class=\"h-card\" href=\"http://tantek.com/\">Tantek \u00c7elik</a>\nDabei gilt die Regel: Wenn es sich bei (z.B.) einer vCard um einen Link oder ein Bild handelt, kann man auf 'u-*' und 'p-name' verzichten\u2026 so ungef\u00e4r zumindest \ud83d\ude09\nMehr dazu im Microformats-Wiki: implied properties\nAu\u00dferdem kommt mit v2 eine Anleitung wie Microformats auf andere Formate wie JSON gemappt werden sollen. Aus\u2026 <a class=\"h-card\" href=\"http://benward.me\">Ben Ward</a>\nwird\u2026 [{ \"type\": [\"h-card\"], \"properties\": { \"name\": [\"Frances Berriman\"] } }] Fazit\nIch bin mir noch nicht ganz sicher was ich von den geplanten \u00c4nderungen halten soll\u2026 die Nutzung der neuen HTML5 Tags und die Vereinfachung und Vereinheitlichung der Formate finde ich gut und notwendig\u2026 Auch eine einheitliche Regel, wie Microformats in anderen Formaten abgebildet werden sollen (z.B. JSON) macht durchaus Sinn (warum das Sinn macht, hier)\u2026 aber den Pseudo-Namespaces kann ich bisher nichts abgewinnen! Der \"Namespace\" sorgt zwar f\u00fcr mehr Qualit\u00e4t beim Parsen der Microformats, aber auf Kosten des semantischen HTMLs.\nMicroformats sollten weiterhin f\u00fcr sch\u00f6nes, semantisches HTML sorgen und mehr nicht. Geht es um maschinenlesbaren Code, sollte man mit der Zeit gehen und auf Microdata oder RDFa setzen. Ob man seinen Quelltext an Microformats v2 anpasst oder mit Schema.org auszeichnet sollte kaum mehr Aufwand sein.\n\u2026\u00dcbrigens: Wer noch mehr \u00fcber die Vorteile von Microdata gegen\u00fcber Microformats lesen will, sollte sich die Ausgabe 10 des Webstandards-Magazin durchlesen oder die Reihe \"Microdata \u2013 wie Microformats blo\u00df besser\u2026\" hier im Blog!",
+                        "lang": "de-DE"
+                    }
+                ],
+                "author": [
+                    {
+                        "type": [
+                            "h-card"
+                        ],
+                        "properties": {
+                            "name": [
+                                "Matthias Pfefferle"
+                            ],
+                            "photo": [
+                                "https://secure.gravatar.com/avatar/75512bb584bbceae57dfc503692b16b2?s=40&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                            ],
+                            "url": [
+                                "https://notiz.blog/author/matthias-pfefferle/"
+                            ],
+                            "uid": [
+                                "https://notiz.blog/author/matthias-pfefferle/"
+                            ]
+                        },
+                        "lang": "de-DE",
+                        "value": "Matthias Pfefferle"
+                    },
+                    {
+                        "type": [
+                            "h-card"
+                        ],
+                        "properties": {
+                            "name": [
+                                "Matthias Pfefferle"
+                            ],
+                            "photo": [
+                                "https://secure.gravatar.com/avatar/75512bb584bbceae57dfc503692b16b2?s=100&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                            ],
+                            "url": [
+                                "https://notiz.blog/author/matthias-pfefferle/"
+                            ],
+                            "uid": [
+                                "https://notiz.blog/author/matthias-pfefferle/"
+                            ],
+                            "note": [
+                                {
+                                    "html": "Ich bin Webworker und arbeite als Head of MyWebsite Core f&#xFC;r die 1&amp;1 Internet SE in Karlsruhe.\n\nIch blogge, podcaste und schreibe eine Kolumne &#xFC;ber das open, independent und federated social Web.",
+                                    "value": "Ich bin Webworker und arbeite als Head of MyWebsite Core f\u00fcr die 1&1 Internet SE in Karlsruhe. Ich blogge, podcaste und schreibe eine Kolumne \u00fcber das open, independent und federated social Web.",
+                                    "lang": "de-DE"
+                                }
+                            ]
+                        },
+                        "lang": "de-DE",
+                        "value": "Matthias Pfefferle"
+                    }
+                ],
+                "comment": [
+                    {
+                        "type": [
+                            "h-cite",
+                            "h-entry"
+                        ],
+                        "properties": {
+                            "summary": [
+                                "Wie aus \u201eBen Ward\u201c im HTML \u201eFrances Berriman\u201c im JSON wird kann ich zwar nicht nachvollziehen \ud83d\ude09 aber ansonsten finde ich die Neuerungen ganz praktisch. Die Namespaces finde ich zwar auch unsch\u00f6n aber wichtig um interoperablen Code zu haben. Problematisch ist, dass der Prefix den Inhaltstyp beschreibt, ich h\u00e4tte mir da etwas nachvollziehbareres gew\u00fcnscht, da das nicht immer aus dem Inhalt zu erschlie\u00dfen ist. (Wo darf man nur plain text, wo rich text, benutzen?)"
+                            ],
+                            "name": [
+                                "Wie aus \u201eBen Ward\u201c im HTML \u201eFrances Berriman\u201c im JSON wird kann ich zwar nicht nachvollziehen \ud83d\ude09 aber ansonsten finde ich die Neuerungen ganz praktisch. Die Namespaces finde ich zwar auch unsch\u00f6n aber wichtig um interoperablen Code zu haben. Problematisch ist, dass der Prefix den Inhaltstyp beschreibt, ich h\u00e4tte mir da etwas nachvollziehbareres gew\u00fcnscht, da das nicht immer aus dem Inhalt zu erschlie\u00dfen ist. (Wo darf man nur plain text, wo rich text, benutzen?)"
+                            ],
+                            "updated": [
+                                "2012-07-03T12:38:24+00:00"
+                            ],
+                            "published": [
+                                "2012-07-03T12:38:24+00:00"
+                            ],
+                            "content": [
+                                {
+                                    "html": "<p>Wie aus &#x201E;Ben Ward&#x201C; im HTML &#x201E;Frances Berriman&#x201C; im JSON wird kann ich zwar nicht nachvollziehen &#x1F609; aber ansonsten finde ich die Neuerungen ganz praktisch. Die Namespaces finde ich zwar auch unsch&#xF6;n aber wichtig um interoperablen Code zu haben. Problematisch ist, dass der Prefix den Inhaltstyp beschreibt, ich h&#xE4;tte mir da etwas nachvollziehbareres gew&#xFC;nscht, da das nicht immer aus dem Inhalt zu erschlie&#xDF;en ist. (Wo darf man nur plain text, wo rich text, benutzen?)</p>",
+                                    "value": "Wie aus \u201eBen Ward\u201c im HTML \u201eFrances Berriman\u201c im JSON wird kann ich zwar nicht nachvollziehen \ud83d\ude09 aber ansonsten finde ich die Neuerungen ganz praktisch. Die Namespaces finde ich zwar auch unsch\u00f6n aber wichtig um interoperablen Code zu haben. Problematisch ist, dass der Prefix den Inhaltstyp beschreibt, ich h\u00e4tte mir da etwas nachvollziehbareres gew\u00fcnscht, da das nicht immer aus dem Inhalt zu erschlie\u00dfen ist. (Wo darf man nur plain text, wo rich text, benutzen?)",
+                                    "lang": "de-DE"
+                                }
+                            ],
+                            "author": [
+                                {
+                                    "type": [
+                                        "h-card"
+                                    ],
+                                    "properties": {
+                                        "name": [
+                                            "eric.eggert"
+                                        ],
+                                        "photo": [
+                                            "https://secure.gravatar.com/avatar/5eebf017e9ef222fd106d72a93bc00d7?s=100&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "eric.eggert"
+                                }
+                            ],
+                            "comment": [
+                                {
+                                    "type": [
+                                        "h-cite",
+                                        "h-entry"
+                                    ],
+                                    "properties": {
+                                        "summary": [
+                                            "Wie aus \u201eBen Ward\u201c im HTML \u201eFrances Berriman\u201c im JSON wird kann ich zwar nicht nachvollziehen \ud83d\ude09\nDas ist die Magie der Microformats \ud83d\ude42\nZu den Prefixes: F\u00fcr Parser sind die Prefixes sicher ein Segen (interpretier alles was mit \u201a*-\u201a beginnt) aber wie du schon sagst sollten sie wirklich nicht vom Typ abh\u00e4ngig sein. Manche Prefixes wie \u201adt-\u201a oder \u201au-\u201a sind \u00fcberfl\u00fcssig, da sie schon \u00fcber die HTML-Tags (\u201a<time />\u201a oder \u201a<a />\u201a) definiert sind und bei \u201ap-\u201a oder \u201ae-\u201a ist es schwer einen Unterschied zu definieren.\nEigentlich h\u00e4tten zwei Prefixes ausgereicht: \u201ah-\u201a f\u00fcr den Container und \u201ap-\u201a f\u00fcr die Properties (bei Microdata itemscope und itemprop).\nAber auch mit der Variante gibt man, meiner Meinung nach, den semantischen Code zu Gunsten einer besseren Maschinenlesbarkeit auf, die immer noch h\u00f6chst fehleranf\u00e4llig ist."
+                                        ],
+                                        "name": [
+                                            "Wie aus \u201eBen Ward\u201c im HTML \u201eFrances Berriman\u201c im JSON wird kann ich zwar nicht nachvollziehen \ud83d\ude09\nDas ist die Magie der Microformats \ud83d\ude42\nZu den Prefixes: F\u00fcr Parser sind die Prefixes sicher ein Segen (interpretier alles was mit \u201a*-\u201a beginnt) aber wie du schon sagst sollten sie wirklich nicht vom Typ abh\u00e4ngig sein. Manche Prefixes wie \u201adt-\u201a oder \u201au-\u201a sind \u00fcberfl\u00fcssig, da sie schon \u00fcber die HTML-Tags (\u201a<time />\u201a oder \u201a<a />\u201a) definiert sind und bei \u201ap-\u201a oder \u201ae-\u201a ist es schwer einen Unterschied zu definieren.\nEigentlich h\u00e4tten zwei Prefixes ausgereicht: \u201ah-\u201a f\u00fcr den Container und \u201ap-\u201a f\u00fcr die Properties (bei Microdata itemscope und itemprop).\nAber auch mit der Variante gibt man, meiner Meinung nach, den semantischen Code zu Gunsten einer besseren Maschinenlesbarkeit auf, die immer noch h\u00f6chst fehleranf\u00e4llig ist."
+                                        ],
+                                        "updated": [
+                                            "2012-07-03T13:20:29+00:00"
+                                        ],
+                                        "published": [
+                                            "2012-07-03T13:20:29+00:00"
+                                        ],
+                                        "content": [
+                                            {
+                                                "html": "<blockquote><p>Wie aus &#x201E;Ben Ward&#x201C; im HTML &#x201E;Frances Berriman&#x201C; im JSON wird kann ich zwar nicht nachvollziehen &#x1F609;</p></blockquote>\n<p>Das ist die Magie der Microformats &#x1F642;</p>\n<p>Zu den Prefixes: F&#xFC;r Parser sind die Prefixes sicher ein Segen (interpretier alles was mit &#x201A;<code>*-</code>&#x201A; beginnt) aber wie du schon sagst sollten sie wirklich nicht vom Typ abh&#xE4;ngig sein. Manche Prefixes wie &#x201A;<code>dt-</code>&#x201A; oder &#x201A;<code>u-</code>&#x201A; sind &#xFC;berfl&#xFC;ssig, da sie schon &#xFC;ber die HTML-Tags (&#x201A;<code>&lt;time /&gt;</code>&#x201A; oder &#x201A;<code>&lt;a /&gt;</code>&#x201A;) definiert sind und bei &#x201A;<code>p-</code>&#x201A; oder &#x201A;<code>e-</code>&#x201A; ist es schwer einen Unterschied zu definieren.</p>\n<p>Eigentlich h&#xE4;tten zwei Prefixes ausgereicht: &#x201A;<code>h-</code>&#x201A; f&#xFC;r den Container und &#x201A;<code>p-</code>&#x201A; f&#xFC;r die Properties (bei Microdata <code>itemscope</code> und <code>itemprop</code>).</p>\n<p>Aber auch mit der Variante gibt man, meiner Meinung nach, den semantischen Code zu Gunsten einer besseren Maschinenlesbarkeit auf, die immer noch h&#xF6;chst fehleranf&#xE4;llig ist.</p>",
+                                                "value": "Wie aus \u201eBen Ward\u201c im HTML \u201eFrances Berriman\u201c im JSON wird kann ich zwar nicht nachvollziehen \ud83d\ude09\nDas ist die Magie der Microformats \ud83d\ude42\nZu den Prefixes: F\u00fcr Parser sind die Prefixes sicher ein Segen (interpretier alles was mit \u201a*-\u201a beginnt) aber wie du schon sagst sollten sie wirklich nicht vom Typ abh\u00e4ngig sein. Manche Prefixes wie \u201adt-\u201a oder \u201au-\u201a sind \u00fcberfl\u00fcssig, da sie schon \u00fcber die HTML-Tags (\u201a<time />\u201a oder \u201a<a />\u201a) definiert sind und bei \u201ap-\u201a oder \u201ae-\u201a ist es schwer einen Unterschied zu definieren.\nEigentlich h\u00e4tten zwei Prefixes ausgereicht: \u201ah-\u201a f\u00fcr den Container und \u201ap-\u201a f\u00fcr die Properties (bei Microdata itemscope und itemprop).\nAber auch mit der Variante gibt man, meiner Meinung nach, den semantischen Code zu Gunsten einer besseren Maschinenlesbarkeit auf, die immer noch h\u00f6chst fehleranf\u00e4llig ist.",
+                                                "lang": "de-DE"
+                                            }
+                                        ],
+                                        "author": [
+                                            {
+                                                "type": [
+                                                    "h-card"
+                                                ],
+                                                "properties": {
+                                                    "name": [
+                                                        "Matthias Pfefferle"
+                                                    ],
+                                                    "photo": [
+                                                        "https://secure.gravatar.com/avatar/75512bb584bbceae57dfc503692b16b2?s=40&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                                                    ],
+                                                    "url": [
+                                                        "https://notiz.blog"
+                                                    ]
+                                                },
+                                                "lang": "de-DE",
+                                                "value": "Matthias Pfefferle"
+                                            }
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "Wie aus \u201eBen Ward\u201c im HTML \u201eFrances Berriman\u201c im JSON wird kann ich zwar nicht nachvollziehen \ud83d\ude09\nDas ist die Magie der Microformats \ud83d\ude42\nZu den Prefixes: F\u00fcr Parser sind die Prefixes sicher ein Segen (interpretier alles was mit \u201a*-\u201a beginnt) aber wie du schon sagst sollten sie wirklich nicht vom Typ abh\u00e4ngig sein. Manche Prefixes wie \u201adt-\u201a oder \u201au-\u201a sind \u00fcberfl\u00fcssig, da sie schon \u00fcber die HTML-Tags (\u201a<time />\u201a oder \u201a<a />\u201a) definiert sind und bei \u201ap-\u201a oder \u201ae-\u201a ist es schwer einen Unterschied zu definieren.\nEigentlich h\u00e4tten zwei Prefixes ausgereicht: \u201ah-\u201a f\u00fcr den Container und \u201ap-\u201a f\u00fcr die Properties (bei Microdata itemscope und itemprop).\nAber auch mit der Variante gibt man, meiner Meinung nach, den semantischen Code zu Gunsten einer besseren Maschinenlesbarkeit auf, die immer noch h\u00f6chst fehleranf\u00e4llig ist."
+                                }
+                            ]
+                        },
+                        "lang": "de-DE",
+                        "value": "Wie aus \u201eBen Ward\u201c im HTML \u201eFrances Berriman\u201c im JSON wird kann ich zwar nicht nachvollziehen \ud83d\ude09 aber ansonsten finde ich die Neuerungen ganz praktisch. Die Namespaces finde ich zwar auch unsch\u00f6n aber wichtig um interoperablen Code zu haben. Problematisch ist, dass der Prefix den Inhaltstyp beschreibt, ich h\u00e4tte mir da etwas nachvollziehbareres gew\u00fcnscht, da das nicht immer aus dem Inhalt zu erschlie\u00dfen ist. (Wo darf man nur plain text, wo rich text, benutzen?)"
+                    },
+                    {
+                        "type": [
+                            "h-cite",
+                            "h-entry"
+                        ],
+                        "properties": {
+                            "summary": [
+                                "Zweierlei:\n1. html und css teilen sich die class Namen? Na und? Wenn man konsequent vorgeht und im html nur semantische Bezeichner verwendet (keinerlei Pr\u00e4sentations-Auszeichnungen im html, also auch keine Pr\u00e4sentations-orientierten class Namen), dann bedeutet das weder f\u00fcr die Semantik noch f\u00fcr die Klassen einen Verlust oder eine Einschr\u00e4nkung. Und verwenden kann man diese Klassen im css immer noch, ebenfalls ohne Einschr\u00e4nkung. Es ist einfach eine Frage der Konsequenz.\n2. Das mit den Namespaces ist interessant. Aber daf\u00fcr *- zu verwenden finde ich nicht gut. Wie Namespace Prefixes auszusehen haben, daf\u00fcr gibt es Spezifikationen beim w3c. Ansonsten f\u00fcgen Namespaces zwar Aufwand hinzu, aber es lohnt sich. Der Gewinn an Flexibilit\u00e4t und Eindeutigkeit gleicht den Mehraufwand mehr als aus."
+                            ],
+                            "name": [
+                                "Zweierlei:\n1. html und css teilen sich die class Namen? Na und? Wenn man konsequent vorgeht und im html nur semantische Bezeichner verwendet (keinerlei Pr\u00e4sentations-Auszeichnungen im html, also auch keine Pr\u00e4sentations-orientierten class Namen), dann bedeutet das weder f\u00fcr die Semantik noch f\u00fcr die Klassen einen Verlust oder eine Einschr\u00e4nkung. Und verwenden kann man diese Klassen im css immer noch, ebenfalls ohne Einschr\u00e4nkung. Es ist einfach eine Frage der Konsequenz.\n2. Das mit den Namespaces ist interessant. Aber daf\u00fcr *- zu verwenden finde ich nicht gut. Wie Namespace Prefixes auszusehen haben, daf\u00fcr gibt es Spezifikationen beim w3c. Ansonsten f\u00fcgen Namespaces zwar Aufwand hinzu, aber es lohnt sich. Der Gewinn an Flexibilit\u00e4t und Eindeutigkeit gleicht den Mehraufwand mehr als aus."
+                            ],
+                            "updated": [
+                                "2012-07-04T09:53:01+00:00"
+                            ],
+                            "published": [
+                                "2012-07-04T09:53:01+00:00"
+                            ],
+                            "content": [
+                                {
+                                    "html": "<p>Zweierlei:</p>\n<p>1. html und css teilen sich die class Namen? Na und? Wenn man konsequent vorgeht und im html nur semantische Bezeichner verwendet (keinerlei Pr&#xE4;sentations-Auszeichnungen im html, also auch keine Pr&#xE4;sentations-orientierten class Namen), dann bedeutet das weder f&#xFC;r die Semantik noch f&#xFC;r die Klassen einen Verlust oder eine Einschr&#xE4;nkung. Und verwenden kann man diese Klassen im css immer noch, ebenfalls ohne Einschr&#xE4;nkung. Es ist einfach eine Frage der Konsequenz.</p>\n<p>2. Das mit den Namespaces ist interessant. Aber daf&#xFC;r *- zu verwenden finde ich nicht gut. Wie Namespace Prefixes auszusehen haben, daf&#xFC;r gibt es Spezifikationen beim w3c. Ansonsten f&#xFC;gen Namespaces zwar Aufwand hinzu, aber es lohnt sich. Der Gewinn an Flexibilit&#xE4;t und Eindeutigkeit gleicht den Mehraufwand mehr als aus.</p>",
+                                    "value": "Zweierlei:\n1. html und css teilen sich die class Namen? Na und? Wenn man konsequent vorgeht und im html nur semantische Bezeichner verwendet (keinerlei Pr\u00e4sentations-Auszeichnungen im html, also auch keine Pr\u00e4sentations-orientierten class Namen), dann bedeutet das weder f\u00fcr die Semantik noch f\u00fcr die Klassen einen Verlust oder eine Einschr\u00e4nkung. Und verwenden kann man diese Klassen im css immer noch, ebenfalls ohne Einschr\u00e4nkung. Es ist einfach eine Frage der Konsequenz.\n2. Das mit den Namespaces ist interessant. Aber daf\u00fcr *- zu verwenden finde ich nicht gut. Wie Namespace Prefixes auszusehen haben, daf\u00fcr gibt es Spezifikationen beim w3c. Ansonsten f\u00fcgen Namespaces zwar Aufwand hinzu, aber es lohnt sich. Der Gewinn an Flexibilit\u00e4t und Eindeutigkeit gleicht den Mehraufwand mehr als aus.",
+                                    "lang": "de-DE"
+                                }
+                            ],
+                            "author": [
+                                {
+                                    "type": [
+                                        "h-card"
+                                    ],
+                                    "properties": {
+                                        "name": [
+                                            "Siegfried"
+                                        ],
+                                        "photo": [
+                                            "https://secure.gravatar.com/avatar/a42e868fcda1bccf47ef7a48697b30ac?s=80&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                                        ],
+                                        "url": [
+                                            "http://www.rorkvell.de"
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "Siegfried"
+                                }
+                            ],
+                            "comment": [
+                                {
+                                    "type": [
+                                        "h-cite",
+                                        "h-entry"
+                                    ],
+                                    "properties": {
+                                        "summary": [
+                                            "Im Punkt \u201e1.\u201c sind wir einer Meinung! Ich sch\u00e4tze Microformats sehr, da sie f\u00fcr sch\u00f6nes und beschreibendes HTML sorgen. Worauf ich hinaus wollte ist, dass Microformats immer noch ein Nischenprodukt sind und eine relativ kleine Entwicklergemeinde von deren Existenz wei\u00df, was dazu f\u00fchrt dass Microformats immer wieder durch Re-Designs zerst\u00f6rt werden, weil classes im Zuge von CSS \u00c4nderungen umbenannt werden oder neu JS-Funktionalit\u00e4t hinzu kommt. Es ist meiner Meinung nach einfacher jemandem zu erkl\u00e4ren die itemprop oder property Attribute stehen zu lassen, als ihm zu erkl\u00e4ren dass die Klassen die er f\u00fcr sein CSS nutzt auch f\u00fcr Google interessant sind.\nBei Punkt \u201e2.\u201c muss ich dir widersprechen, weil die Namespaces genau das kaputt machen was Microformats gerade ausmachen. Bisher kann jeder mit Begriffen wie description, note, entry-title oder name etwas Anfangen, ob er Micorformats kennt oder nicht. Mit der Einf\u00fchrung der Namespaces sieht das anders aus, vor allem weil der Prfix f\u00fcr den Daten-Typ steht.\nIch bin der Meinung, dass man Microformats mit den Prefixes krampfhaft zu etwas machen will, was Microdata und RDFa viel besser leisten k\u00f6nnen und damit das kaputt macht was Microformas sind\u2026 sch\u00f6nes Plain Old Semantic HTML."
+                                        ],
+                                        "name": [
+                                            "Im Punkt \u201e1.\u201c sind wir einer Meinung! Ich sch\u00e4tze Microformats sehr, da sie f\u00fcr sch\u00f6nes und beschreibendes HTML sorgen. Worauf ich hinaus wollte ist, dass Microformats immer noch ein Nischenprodukt sind und eine relativ kleine Entwicklergemeinde von deren Existenz wei\u00df, was dazu f\u00fchrt dass Microformats immer wieder durch Re-Designs zerst\u00f6rt werden, weil classes im Zuge von CSS \u00c4nderungen umbenannt werden oder neu JS-Funktionalit\u00e4t hinzu kommt. Es ist meiner Meinung nach einfacher jemandem zu erkl\u00e4ren die itemprop oder property Attribute stehen zu lassen, als ihm zu erkl\u00e4ren dass die Klassen die er f\u00fcr sein CSS nutzt auch f\u00fcr Google interessant sind.\nBei Punkt \u201e2.\u201c muss ich dir widersprechen, weil die Namespaces genau das kaputt machen was Microformats gerade ausmachen. Bisher kann jeder mit Begriffen wie description, note, entry-title oder name etwas Anfangen, ob er Micorformats kennt oder nicht. Mit der Einf\u00fchrung der Namespaces sieht das anders aus, vor allem weil der Prfix f\u00fcr den Daten-Typ steht.\nIch bin der Meinung, dass man Microformats mit den Prefixes krampfhaft zu etwas machen will, was Microdata und RDFa viel besser leisten k\u00f6nnen und damit das kaputt macht was Microformas sind\u2026 sch\u00f6nes Plain Old Semantic HTML."
+                                        ],
+                                        "updated": [
+                                            "2012-07-04T12:38:52+00:00"
+                                        ],
+                                        "published": [
+                                            "2012-07-04T12:38:52+00:00"
+                                        ],
+                                        "content": [
+                                            {
+                                                "html": "<p>Im Punkt &#x201E;1.&#x201C; sind wir einer Meinung! Ich sch&#xE4;tze Microformats sehr, da sie f&#xFC;r sch&#xF6;nes und beschreibendes HTML sorgen. Worauf ich hinaus wollte ist, dass Microformats immer noch ein Nischenprodukt sind und eine relativ kleine Entwicklergemeinde von deren Existenz wei&#xDF;, was dazu f&#xFC;hrt dass Microformats immer wieder durch Re-Designs zerst&#xF6;rt werden, weil <code>classes</code> im Zuge von CSS &#xC4;nderungen umbenannt werden oder neu JS-Funktionalit&#xE4;t hinzu kommt. Es ist meiner Meinung nach einfacher jemandem zu erkl&#xE4;ren die <code>itemprop</code> oder <code>property</code> Attribute stehen zu lassen, als ihm zu erkl&#xE4;ren dass die Klassen die er f&#xFC;r sein CSS nutzt auch f&#xFC;r Google interessant sind.</p>\n<p>Bei Punkt &#x201E;2.&#x201C; muss ich dir widersprechen, weil die Namespaces genau das kaputt machen was Microformats gerade ausmachen. Bisher kann jeder mit Begriffen wie <code>description</code>, <code>note</code>, <code>entry-title</code> oder <code>name</code> etwas Anfangen, ob er Micorformats kennt oder nicht. Mit der Einf&#xFC;hrung der Namespaces sieht das anders aus, vor allem weil der Prfix f&#xFC;r den Daten-Typ steht.</p>\n<p>Ich bin der Meinung, dass man Microformats mit den Prefixes krampfhaft zu etwas machen will, was Microdata und RDFa viel besser leisten k&#xF6;nnen und damit das kaputt macht was Microformas sind&#x2026; sch&#xF6;nes <em>Plain Old Semantic HTML</em>.</p>",
+                                                "value": "Im Punkt \u201e1.\u201c sind wir einer Meinung! Ich sch\u00e4tze Microformats sehr, da sie f\u00fcr sch\u00f6nes und beschreibendes HTML sorgen. Worauf ich hinaus wollte ist, dass Microformats immer noch ein Nischenprodukt sind und eine relativ kleine Entwicklergemeinde von deren Existenz wei\u00df, was dazu f\u00fchrt dass Microformats immer wieder durch Re-Designs zerst\u00f6rt werden, weil classes im Zuge von CSS \u00c4nderungen umbenannt werden oder neu JS-Funktionalit\u00e4t hinzu kommt. Es ist meiner Meinung nach einfacher jemandem zu erkl\u00e4ren die itemprop oder property Attribute stehen zu lassen, als ihm zu erkl\u00e4ren dass die Klassen die er f\u00fcr sein CSS nutzt auch f\u00fcr Google interessant sind.\nBei Punkt \u201e2.\u201c muss ich dir widersprechen, weil die Namespaces genau das kaputt machen was Microformats gerade ausmachen. Bisher kann jeder mit Begriffen wie description, note, entry-title oder name etwas Anfangen, ob er Micorformats kennt oder nicht. Mit der Einf\u00fchrung der Namespaces sieht das anders aus, vor allem weil der Prfix f\u00fcr den Daten-Typ steht.\nIch bin der Meinung, dass man Microformats mit den Prefixes krampfhaft zu etwas machen will, was Microdata und RDFa viel besser leisten k\u00f6nnen und damit das kaputt macht was Microformas sind\u2026 sch\u00f6nes Plain Old Semantic HTML.",
+                                                "lang": "de-DE"
+                                            }
+                                        ],
+                                        "author": [
+                                            {
+                                                "type": [
+                                                    "h-card"
+                                                ],
+                                                "properties": {
+                                                    "name": [
+                                                        "Matthias Pfefferle"
+                                                    ],
+                                                    "photo": [
+                                                        "https://secure.gravatar.com/avatar/75512bb584bbceae57dfc503692b16b2?s=40&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                                                    ],
+                                                    "url": [
+                                                        "https://notiz.blog"
+                                                    ]
+                                                },
+                                                "lang": "de-DE",
+                                                "value": "Matthias Pfefferle"
+                                            }
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "Im Punkt \u201e1.\u201c sind wir einer Meinung! Ich sch\u00e4tze Microformats sehr, da sie f\u00fcr sch\u00f6nes und beschreibendes HTML sorgen. Worauf ich hinaus wollte ist, dass Microformats immer noch ein Nischenprodukt sind und eine relativ kleine Entwicklergemeinde von deren Existenz wei\u00df, was dazu f\u00fchrt dass Microformats immer wieder durch Re-Designs zerst\u00f6rt werden, weil classes im Zuge von CSS \u00c4nderungen umbenannt werden oder neu JS-Funktionalit\u00e4t hinzu kommt. Es ist meiner Meinung nach einfacher jemandem zu erkl\u00e4ren die itemprop oder property Attribute stehen zu lassen, als ihm zu erkl\u00e4ren dass die Klassen die er f\u00fcr sein CSS nutzt auch f\u00fcr Google interessant sind.\nBei Punkt \u201e2.\u201c muss ich dir widersprechen, weil die Namespaces genau das kaputt machen was Microformats gerade ausmachen. Bisher kann jeder mit Begriffen wie description, note, entry-title oder name etwas Anfangen, ob er Micorformats kennt oder nicht. Mit der Einf\u00fchrung der Namespaces sieht das anders aus, vor allem weil der Prfix f\u00fcr den Daten-Typ steht.\nIch bin der Meinung, dass man Microformats mit den Prefixes krampfhaft zu etwas machen will, was Microdata und RDFa viel besser leisten k\u00f6nnen und damit das kaputt macht was Microformas sind\u2026 sch\u00f6nes Plain Old Semantic HTML."
+                                }
+                            ]
+                        },
+                        "lang": "de-DE",
+                        "value": "Zweierlei:\n1. html und css teilen sich die class Namen? Na und? Wenn man konsequent vorgeht und im html nur semantische Bezeichner verwendet (keinerlei Pr\u00e4sentations-Auszeichnungen im html, also auch keine Pr\u00e4sentations-orientierten class Namen), dann bedeutet das weder f\u00fcr die Semantik noch f\u00fcr die Klassen einen Verlust oder eine Einschr\u00e4nkung. Und verwenden kann man diese Klassen im css immer noch, ebenfalls ohne Einschr\u00e4nkung. Es ist einfach eine Frage der Konsequenz.\n2. Das mit den Namespaces ist interessant. Aber daf\u00fcr *- zu verwenden finde ich nicht gut. Wie Namespace Prefixes auszusehen haben, daf\u00fcr gibt es Spezifikationen beim w3c. Ansonsten f\u00fcgen Namespaces zwar Aufwand hinzu, aber es lohnt sich. Der Gewinn an Flexibilit\u00e4t und Eindeutigkeit gleicht den Mehraufwand mehr als aus."
+                    },
+                    {
+                        "type": [
+                            "h-cite",
+                            "h-entry"
+                        ],
+                        "properties": {
+                            "summary": [
+                                "Zu 1.: Naja, wer sich erst mal durchgerungen hat, semantisches statt pr\u00e4sentationsorientiertes Markup zu schreiben, wer also z.B. daf\u00fcr zu Microformats greift, der wird vermutlich auch eher bereit sein, die Klassennamen weiterhin auch bei einem Redesign ordentlich zu w\u00e4hlen. Aber das ist nat\u00fcrlich nur eine Vermutung von mir \ud83d\ude42\nZu 2.: Ich verstehe Deine Argumentation. Da ist auch was dran. Der Mehraufwand wirkt zun\u00e4chst tats\u00e4chlich abschreckend. Wobei hier m.M.n. vor Allem die Vielzahl der Pr\u00e4fixe abschreckend ist. Weniger w\u00e4re hier deutlich mehr. Aber ich denke immer noch, dass die Vorteile die durchaus vorhandenen Nachteile aufwiegen k\u00f6nnten. Aber nat\u00fcrlich ist auch dies eine pers\u00f6nliche Vermutung.\nZu den Alternativen: RDFa finde ich recht ordentlich. Bei Microdata sehe ich noch nicht so recht klar. Was soll z.B. dieses \u201eitemscope\u201c? Ist das ein Attribut? Dann fehlt hier der Wert. Ohne Wert ist es wertlos (im Sinne des Wortes, und im anderen Sinn auch). Auch, f\u00fcr die entsprechende Meta-Information ein neues Attribut (itemprop) zu erfinden finde ich nicht so das Gelbe vom Ei. Der Inhalt des class Attributs soll den Inhalt des html-Containers (n\u00e4her) klassifizieren. Daher heisst es ja auch \u201eclass\u201c. Es ist nur konsequent, daf\u00fcr auch genau dieses Attribut zu verwenden.\nUnd nur als Erg\u00e4nzung: Nat\u00fcrlich sollte die erste Wahl zur Klassifizierung eines Inhalts immer das passende html-Element sein. Daher bringt hier html5 wirklich N\u00fctzliches. Auch, dass man jetzt endlich meta-Informationen nicht nur im Header, also g\u00fcltig f\u00fcr die gesamte Seite, sondern auch f\u00fcr einen Teilbereich der Seite einf\u00fcgen kann, ist sehr sehr n\u00fctzlich. Das war \u00fcberf\u00e4llig. Und Vieles von dem, was jetzt endlich realisiert wurde, macht Einiges von dem, was bisher Microformats und \u00c4hnliche leisteten, obsolet. Kann man getrost begraben. Deswegen werden Microformats, RDFa und Dergleichen nicht gleich \u00fcberfl\u00fcssig. Aber ich denke, das hast Du ja so oder so \u00e4hnlich hier auch schon geschrieben.\nUnd was den Blick in die Glaskugel (Zukunft) angeht: Das kann man getrost unterschiedlich interpretieren. Wir werden sehen."
+                            ],
+                            "name": [
+                                "Zu 1.: Naja, wer sich erst mal durchgerungen hat, semantisches statt pr\u00e4sentationsorientiertes Markup zu schreiben, wer also z.B. daf\u00fcr zu Microformats greift, der wird vermutlich auch eher bereit sein, die Klassennamen weiterhin auch bei einem Redesign ordentlich zu w\u00e4hlen. Aber das ist nat\u00fcrlich nur eine Vermutung von mir \ud83d\ude42\nZu 2.: Ich verstehe Deine Argumentation. Da ist auch was dran. Der Mehraufwand wirkt zun\u00e4chst tats\u00e4chlich abschreckend. Wobei hier m.M.n. vor Allem die Vielzahl der Pr\u00e4fixe abschreckend ist. Weniger w\u00e4re hier deutlich mehr. Aber ich denke immer noch, dass die Vorteile die durchaus vorhandenen Nachteile aufwiegen k\u00f6nnten. Aber nat\u00fcrlich ist auch dies eine pers\u00f6nliche Vermutung.\nZu den Alternativen: RDFa finde ich recht ordentlich. Bei Microdata sehe ich noch nicht so recht klar. Was soll z.B. dieses \u201eitemscope\u201c? Ist das ein Attribut? Dann fehlt hier der Wert. Ohne Wert ist es wertlos (im Sinne des Wortes, und im anderen Sinn auch). Auch, f\u00fcr die entsprechende Meta-Information ein neues Attribut (itemprop) zu erfinden finde ich nicht so das Gelbe vom Ei. Der Inhalt des class Attributs soll den Inhalt des html-Containers (n\u00e4her) klassifizieren. Daher heisst es ja auch \u201eclass\u201c. Es ist nur konsequent, daf\u00fcr auch genau dieses Attribut zu verwenden.\nUnd nur als Erg\u00e4nzung: Nat\u00fcrlich sollte die erste Wahl zur Klassifizierung eines Inhalts immer das passende html-Element sein. Daher bringt hier html5 wirklich N\u00fctzliches. Auch, dass man jetzt endlich meta-Informationen nicht nur im Header, also g\u00fcltig f\u00fcr die gesamte Seite, sondern auch f\u00fcr einen Teilbereich der Seite einf\u00fcgen kann, ist sehr sehr n\u00fctzlich. Das war \u00fcberf\u00e4llig. Und Vieles von dem, was jetzt endlich realisiert wurde, macht Einiges von dem, was bisher Microformats und \u00c4hnliche leisteten, obsolet. Kann man getrost begraben. Deswegen werden Microformats, RDFa und Dergleichen nicht gleich \u00fcberfl\u00fcssig. Aber ich denke, das hast Du ja so oder so \u00e4hnlich hier auch schon geschrieben.\nUnd was den Blick in die Glaskugel (Zukunft) angeht: Das kann man getrost unterschiedlich interpretieren. Wir werden sehen."
+                            ],
+                            "updated": [
+                                "2012-07-04T15:35:46+00:00"
+                            ],
+                            "published": [
+                                "2012-07-04T15:35:46+00:00"
+                            ],
+                            "content": [
+                                {
+                                    "html": "<p>Zu 1.: Naja, wer sich erst mal durchgerungen hat, semantisches statt pr&#xE4;sentationsorientiertes Markup zu schreiben, wer also z.B. daf&#xFC;r zu Microformats greift, der wird vermutlich auch eher bereit sein, die Klassennamen weiterhin auch bei einem Redesign ordentlich zu w&#xE4;hlen. Aber das ist nat&#xFC;rlich nur eine Vermutung von mir &#x1F642;</p>\n<p>Zu 2.: Ich verstehe Deine Argumentation. Da ist auch was dran. Der Mehraufwand wirkt zun&#xE4;chst tats&#xE4;chlich abschreckend. Wobei hier m.M.n. vor Allem die Vielzahl der Pr&#xE4;fixe abschreckend ist. Weniger w&#xE4;re hier deutlich mehr. Aber ich denke immer noch, dass die Vorteile die durchaus vorhandenen Nachteile aufwiegen k&#xF6;nnten. Aber nat&#xFC;rlich ist auch dies eine pers&#xF6;nliche Vermutung.</p>\n<p>Zu den Alternativen: RDFa finde ich recht ordentlich. Bei Microdata sehe ich noch nicht so recht klar. Was soll z.B. dieses &#x201E;itemscope&#x201C;? Ist das ein Attribut? Dann fehlt hier der Wert. Ohne Wert ist es wertlos (im Sinne des Wortes, und im anderen Sinn auch). Auch, f&#xFC;r die entsprechende Meta-Information ein neues Attribut (itemprop) zu erfinden finde ich nicht so das Gelbe vom Ei. Der Inhalt des class Attributs soll den Inhalt des html-Containers (n&#xE4;her) klassifizieren. Daher heisst es ja auch &#x201E;class&#x201C;. Es ist nur konsequent, daf&#xFC;r auch genau dieses Attribut zu verwenden.</p>\n<p>Und nur als Erg&#xE4;nzung: Nat&#xFC;rlich sollte die erste Wahl zur Klassifizierung eines Inhalts immer das passende html-Element sein. Daher bringt hier html5 wirklich N&#xFC;tzliches. Auch, dass man jetzt endlich meta-Informationen nicht nur im Header, also g&#xFC;ltig f&#xFC;r die gesamte Seite, sondern auch f&#xFC;r einen Teilbereich der Seite einf&#xFC;gen kann, ist sehr sehr n&#xFC;tzlich. Das war &#xFC;berf&#xE4;llig. Und Vieles von dem, was jetzt endlich realisiert wurde, macht Einiges von dem, was bisher Microformats und &#xC4;hnliche leisteten, obsolet. Kann man getrost begraben. Deswegen werden Microformats, RDFa und Dergleichen nicht gleich &#xFC;berfl&#xFC;ssig. Aber ich denke, das hast Du ja so oder so &#xE4;hnlich hier auch schon geschrieben. </p>\n<p>Und was den Blick in die Glaskugel (Zukunft) angeht: Das kann man getrost unterschiedlich interpretieren. Wir werden sehen.</p>",
+                                    "value": "Zu 1.: Naja, wer sich erst mal durchgerungen hat, semantisches statt pr\u00e4sentationsorientiertes Markup zu schreiben, wer also z.B. daf\u00fcr zu Microformats greift, der wird vermutlich auch eher bereit sein, die Klassennamen weiterhin auch bei einem Redesign ordentlich zu w\u00e4hlen. Aber das ist nat\u00fcrlich nur eine Vermutung von mir \ud83d\ude42\nZu 2.: Ich verstehe Deine Argumentation. Da ist auch was dran. Der Mehraufwand wirkt zun\u00e4chst tats\u00e4chlich abschreckend. Wobei hier m.M.n. vor Allem die Vielzahl der Pr\u00e4fixe abschreckend ist. Weniger w\u00e4re hier deutlich mehr. Aber ich denke immer noch, dass die Vorteile die durchaus vorhandenen Nachteile aufwiegen k\u00f6nnten. Aber nat\u00fcrlich ist auch dies eine pers\u00f6nliche Vermutung.\nZu den Alternativen: RDFa finde ich recht ordentlich. Bei Microdata sehe ich noch nicht so recht klar. Was soll z.B. dieses \u201eitemscope\u201c? Ist das ein Attribut? Dann fehlt hier der Wert. Ohne Wert ist es wertlos (im Sinne des Wortes, und im anderen Sinn auch). Auch, f\u00fcr die entsprechende Meta-Information ein neues Attribut (itemprop) zu erfinden finde ich nicht so das Gelbe vom Ei. Der Inhalt des class Attributs soll den Inhalt des html-Containers (n\u00e4her) klassifizieren. Daher heisst es ja auch \u201eclass\u201c. Es ist nur konsequent, daf\u00fcr auch genau dieses Attribut zu verwenden.\nUnd nur als Erg\u00e4nzung: Nat\u00fcrlich sollte die erste Wahl zur Klassifizierung eines Inhalts immer das passende html-Element sein. Daher bringt hier html5 wirklich N\u00fctzliches. Auch, dass man jetzt endlich meta-Informationen nicht nur im Header, also g\u00fcltig f\u00fcr die gesamte Seite, sondern auch f\u00fcr einen Teilbereich der Seite einf\u00fcgen kann, ist sehr sehr n\u00fctzlich. Das war \u00fcberf\u00e4llig. Und Vieles von dem, was jetzt endlich realisiert wurde, macht Einiges von dem, was bisher Microformats und \u00c4hnliche leisteten, obsolet. Kann man getrost begraben. Deswegen werden Microformats, RDFa und Dergleichen nicht gleich \u00fcberfl\u00fcssig. Aber ich denke, das hast Du ja so oder so \u00e4hnlich hier auch schon geschrieben.\nUnd was den Blick in die Glaskugel (Zukunft) angeht: Das kann man getrost unterschiedlich interpretieren. Wir werden sehen.",
+                                    "lang": "de-DE"
+                                }
+                            ],
+                            "author": [
+                                {
+                                    "type": [
+                                        "h-card"
+                                    ],
+                                    "properties": {
+                                        "name": [
+                                            "Siegfried"
+                                        ],
+                                        "photo": [
+                                            "https://secure.gravatar.com/avatar/a42e868fcda1bccf47ef7a48697b30ac?s=100&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                                        ],
+                                        "url": [
+                                            "http://www.rorkvell.de"
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "Siegfried"
+                                }
+                            ]
+                        },
+                        "lang": "de-DE",
+                        "value": "Zu 1.: Naja, wer sich erst mal durchgerungen hat, semantisches statt pr\u00e4sentationsorientiertes Markup zu schreiben, wer also z.B. daf\u00fcr zu Microformats greift, der wird vermutlich auch eher bereit sein, die Klassennamen weiterhin auch bei einem Redesign ordentlich zu w\u00e4hlen. Aber das ist nat\u00fcrlich nur eine Vermutung von mir \ud83d\ude42\nZu 2.: Ich verstehe Deine Argumentation. Da ist auch was dran. Der Mehraufwand wirkt zun\u00e4chst tats\u00e4chlich abschreckend. Wobei hier m.M.n. vor Allem die Vielzahl der Pr\u00e4fixe abschreckend ist. Weniger w\u00e4re hier deutlich mehr. Aber ich denke immer noch, dass die Vorteile die durchaus vorhandenen Nachteile aufwiegen k\u00f6nnten. Aber nat\u00fcrlich ist auch dies eine pers\u00f6nliche Vermutung.\nZu den Alternativen: RDFa finde ich recht ordentlich. Bei Microdata sehe ich noch nicht so recht klar. Was soll z.B. dieses \u201eitemscope\u201c? Ist das ein Attribut? Dann fehlt hier der Wert. Ohne Wert ist es wertlos (im Sinne des Wortes, und im anderen Sinn auch). Auch, f\u00fcr die entsprechende Meta-Information ein neues Attribut (itemprop) zu erfinden finde ich nicht so das Gelbe vom Ei. Der Inhalt des class Attributs soll den Inhalt des html-Containers (n\u00e4her) klassifizieren. Daher heisst es ja auch \u201eclass\u201c. Es ist nur konsequent, daf\u00fcr auch genau dieses Attribut zu verwenden.\nUnd nur als Erg\u00e4nzung: Nat\u00fcrlich sollte die erste Wahl zur Klassifizierung eines Inhalts immer das passende html-Element sein. Daher bringt hier html5 wirklich N\u00fctzliches. Auch, dass man jetzt endlich meta-Informationen nicht nur im Header, also g\u00fcltig f\u00fcr die gesamte Seite, sondern auch f\u00fcr einen Teilbereich der Seite einf\u00fcgen kann, ist sehr sehr n\u00fctzlich. Das war \u00fcberf\u00e4llig. Und Vieles von dem, was jetzt endlich realisiert wurde, macht Einiges von dem, was bisher Microformats und \u00c4hnliche leisteten, obsolet. Kann man getrost begraben. Deswegen werden Microformats, RDFa und Dergleichen nicht gleich \u00fcberfl\u00fcssig. Aber ich denke, das hast Du ja so oder so \u00e4hnlich hier auch schon geschrieben.\nUnd was den Blick in die Glaskugel (Zukunft) angeht: Das kann man getrost unterschiedlich interpretieren. Wir werden sehen."
+                    },
+                    {
+                        "type": [
+                            "h-cite",
+                            "h-entry"
+                        ],
+                        "properties": {
+                            "summary": [
+                                "\u201eDie Prefixes \u2018h-\u2018, \u2018p-\u2018, \u2018u-\u2018, \u2018dt-\u2018 und \u2018e-\u2018 sollen das Zuk\u00fcnftig verhindern und ein generisches parsen erm\u00f6glichen.\u201c\nMit Verlaub \u2013 na ist ja jetzt richtiger Bullshit! Jetzt werden auf 5 Ebenen Namespaces in Anspruch genommen. Was das jetzt verbessert ist ja nun wirklich die Frage!"
+                            ],
+                            "name": [
+                                "\u201eDie Prefixes \u2018h-\u2018, \u2018p-\u2018, \u2018u-\u2018, \u2018dt-\u2018 und \u2018e-\u2018 sollen das Zuk\u00fcnftig verhindern und ein generisches parsen erm\u00f6glichen.\u201c\nMit Verlaub \u2013 na ist ja jetzt richtiger Bullshit! Jetzt werden auf 5 Ebenen Namespaces in Anspruch genommen. Was das jetzt verbessert ist ja nun wirklich die Frage!"
+                            ],
+                            "updated": [
+                                "2012-08-10T20:43:03+00:00"
+                            ],
+                            "published": [
+                                "2012-08-10T20:43:03+00:00"
+                            ],
+                            "content": [
+                                {
+                                    "html": "<p>&#x201E;Die Prefixes &#x2018;h-&#x2018;, &#x2018;p-&#x2018;, &#x2018;u-&#x2018;, &#x2018;dt-&#x2018; und &#x2018;e-&#x2018; sollen das Zuk&#xFC;nftig verhindern und ein generisches parsen erm&#xF6;glichen.&#x201C;</p>\n<p>Mit Verlaub &#x2013; na ist ja jetzt richtiger Bullshit! Jetzt werden auf 5 Ebenen Namespaces in Anspruch genommen. Was das jetzt verbessert ist ja nun wirklich die Frage!</p>",
+                                    "value": "\u201eDie Prefixes \u2018h-\u2018, \u2018p-\u2018, \u2018u-\u2018, \u2018dt-\u2018 und \u2018e-\u2018 sollen das Zuk\u00fcnftig verhindern und ein generisches parsen erm\u00f6glichen.\u201c\nMit Verlaub \u2013 na ist ja jetzt richtiger Bullshit! Jetzt werden auf 5 Ebenen Namespaces in Anspruch genommen. Was das jetzt verbessert ist ja nun wirklich die Frage!",
+                                    "lang": "de-DE"
+                                }
+                            ],
+                            "author": [
+                                {
+                                    "type": [
+                                        "h-card"
+                                    ],
+                                    "properties": {
+                                        "name": [
+                                            "nik"
+                                        ],
+                                        "photo": [
+                                            "https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg"
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "nik"
+                                }
+                            ],
+                            "comment": [
+                                {
+                                    "type": [
+                                        "h-cite",
+                                        "h-entry"
+                                    ],
+                                    "properties": {
+                                        "summary": [
+                                            "Ja, je mehr Namespaces es gibt desto fehleranf\u00e4lliger wird es wieder. Au\u00dferdem ist der eine Buchstabe auch nicht wirklich deskriptiv und sorgt sicherlich wieder f\u00fcr eine Menge Namens-Kollisionen."
+                                        ],
+                                        "name": [
+                                            "Ja, je mehr Namespaces es gibt desto fehleranf\u00e4lliger wird es wieder. Au\u00dferdem ist der eine Buchstabe auch nicht wirklich deskriptiv und sorgt sicherlich wieder f\u00fcr eine Menge Namens-Kollisionen."
+                                        ],
+                                        "updated": [
+                                            "2012-09-06T22:59:33+00:00"
+                                        ],
+                                        "published": [
+                                            "2012-09-06T22:59:33+00:00"
+                                        ],
+                                        "content": [
+                                            {
+                                                "html": "<p>Ja, je mehr Namespaces es gibt desto fehleranf&#xE4;lliger wird es wieder. Au&#xDF;erdem ist der eine Buchstabe auch nicht wirklich deskriptiv und sorgt sicherlich wieder f&#xFC;r eine Menge Namens-Kollisionen.</p>",
+                                                "value": "Ja, je mehr Namespaces es gibt desto fehleranf\u00e4lliger wird es wieder. Au\u00dferdem ist der eine Buchstabe auch nicht wirklich deskriptiv und sorgt sicherlich wieder f\u00fcr eine Menge Namens-Kollisionen.",
+                                                "lang": "de-DE"
+                                            }
+                                        ],
+                                        "author": [
+                                            {
+                                                "type": [
+                                                    "h-card"
+                                                ],
+                                                "properties": {
+                                                    "name": [
+                                                        "Matthias Pfefferle"
+                                                    ],
+                                                    "photo": [
+                                                        "https://secure.gravatar.com/avatar/75512bb584bbceae57dfc503692b16b2?s=40&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                                                    ],
+                                                    "url": [
+                                                        "https://notiz.blog"
+                                                    ]
+                                                },
+                                                "lang": "de-DE",
+                                                "value": "Matthias Pfefferle"
+                                            }
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "Ja, je mehr Namespaces es gibt desto fehleranf\u00e4lliger wird es wieder. Au\u00dferdem ist der eine Buchstabe auch nicht wirklich deskriptiv und sorgt sicherlich wieder f\u00fcr eine Menge Namens-Kollisionen."
+                                }
+                            ]
+                        },
+                        "lang": "de-DE",
+                        "value": "\u201eDie Prefixes \u2018h-\u2018, \u2018p-\u2018, \u2018u-\u2018, \u2018dt-\u2018 und \u2018e-\u2018 sollen das Zuk\u00fcnftig verhindern und ein generisches parsen erm\u00f6glichen.\u201c\nMit Verlaub \u2013 na ist ja jetzt richtiger Bullshit! Jetzt werden auf 5 Ebenen Namespaces in Anspruch genommen. Was das jetzt verbessert ist ja nun wirklich die Frage!"
+                    },
+                    {
+                        "type": [
+                            "h-cite",
+                            "h-entry"
+                        ],
+                        "properties": {
+                            "summary": [
+                                "Ich habe jetzt noch mal einige Zeit dar\u00fcber nachgedacht und neige nun eher dazu, Dir zuzustimmen: Namespaces bei Microformats sind eher hinderlich. Die n\u00f6tige Flexibilit\u00e4t erreicht man ggf. \u00fcber RDFa und/oder Microdata.\nIch teste \u00fcbrigens gerade viele verschiedene HTML Versionen von Blogs auf Microformats. Die sind gar nicht mal so selten. Und bislang ausschlie\u00dflich ohne Prefix. Also \u201eplain old\u201c. Hat sich vielleicht doch mehr durchgesetzt, als Du derzeit vermutest."
+                            ],
+                            "name": [
+                                "Ich habe jetzt noch mal einige Zeit dar\u00fcber nachgedacht und neige nun eher dazu, Dir zuzustimmen: Namespaces bei Microformats sind eher hinderlich. Die n\u00f6tige Flexibilit\u00e4t erreicht man ggf. \u00fcber RDFa und/oder Microdata.\nIch teste \u00fcbrigens gerade viele verschiedene HTML Versionen von Blogs auf Microformats. Die sind gar nicht mal so selten. Und bislang ausschlie\u00dflich ohne Prefix. Also \u201eplain old\u201c. Hat sich vielleicht doch mehr durchgesetzt, als Du derzeit vermutest."
+                            ],
+                            "updated": [
+                                "2012-09-05T14:18:59+00:00"
+                            ],
+                            "published": [
+                                "2012-09-05T14:18:59+00:00"
+                            ],
+                            "content": [
+                                {
+                                    "html": "<p>Ich habe jetzt noch mal einige Zeit dar&#xFC;ber nachgedacht und neige nun eher dazu, Dir zuzustimmen: Namespaces bei Microformats sind eher hinderlich. Die n&#xF6;tige Flexibilit&#xE4;t erreicht man ggf. &#xFC;ber RDFa und/oder Microdata.</p>\n<p>Ich teste &#xFC;brigens gerade viele verschiedene HTML Versionen von Blogs auf Microformats. Die sind gar nicht mal so selten. Und bislang ausschlie&#xDF;lich ohne Prefix. Also &#x201E;plain old&#x201C;. Hat sich vielleicht doch mehr durchgesetzt, als Du derzeit vermutest.</p>",
+                                    "value": "Ich habe jetzt noch mal einige Zeit dar\u00fcber nachgedacht und neige nun eher dazu, Dir zuzustimmen: Namespaces bei Microformats sind eher hinderlich. Die n\u00f6tige Flexibilit\u00e4t erreicht man ggf. \u00fcber RDFa und/oder Microdata.\nIch teste \u00fcbrigens gerade viele verschiedene HTML Versionen von Blogs auf Microformats. Die sind gar nicht mal so selten. Und bislang ausschlie\u00dflich ohne Prefix. Also \u201eplain old\u201c. Hat sich vielleicht doch mehr durchgesetzt, als Du derzeit vermutest.",
+                                    "lang": "de-DE"
+                                }
+                            ],
+                            "author": [
+                                {
+                                    "type": [
+                                        "h-card"
+                                    ],
+                                    "properties": {
+                                        "name": [
+                                            "Siegfried"
+                                        ],
+                                        "photo": [
+                                            "https://secure.gravatar.com/avatar/a42e868fcda1bccf47ef7a48697b30ac?s=80&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                                        ],
+                                        "url": [
+                                            "http://www.rorkvell.de"
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "Siegfried"
+                                }
+                            ],
+                            "comment": [
+                                {
+                                    "type": [
+                                        "h-cite",
+                                        "h-entry"
+                                    ],
+                                    "properties": {
+                                        "summary": [
+                                            "Ich habe bei meinem WordPress Theme mal versucht Microformats 2 umzusetzen\u2026 Das gr\u00f6\u00dfte Probleme war f\u00fcr mich der Zusammenhang von Namespace und Datentyp\u2026 Ist der hAtom-Title jetzt e-entry-title oder p-entry-title\u2026\nDass Microformats erfolgreich sind, war mir schon klar\u2026 ich bin nur der Meinung dass es langsam Zeit f\u00fcr eine Weiterentwicklung ist \ud83d\ude09"
+                                        ],
+                                        "name": [
+                                            "Ich habe bei meinem WordPress Theme mal versucht Microformats 2 umzusetzen\u2026 Das gr\u00f6\u00dfte Probleme war f\u00fcr mich der Zusammenhang von Namespace und Datentyp\u2026 Ist der hAtom-Title jetzt e-entry-title oder p-entry-title\u2026\nDass Microformats erfolgreich sind, war mir schon klar\u2026 ich bin nur der Meinung dass es langsam Zeit f\u00fcr eine Weiterentwicklung ist \ud83d\ude09"
+                                        ],
+                                        "updated": [
+                                            "2012-09-06T23:07:26+00:00"
+                                        ],
+                                        "published": [
+                                            "2012-09-06T23:07:26+00:00"
+                                        ],
+                                        "content": [
+                                            {
+                                                "html": "<p>Ich habe bei meinem <a href=\"https://notiz.blog/2012/09/06/ive-made-a-wordpress-theme-kind-of/\">WordPress Theme</a> mal versucht Microformats 2 umzusetzen&#x2026; Das gr&#xF6;&#xDF;te Probleme war f&#xFC;r mich der Zusammenhang von Namespace und Datentyp&#x2026; Ist der hAtom-Title jetzt <code>e-entry-title</code> oder <code>p-entry-title</code>&#x2026;</p>\n<p>Dass <a href=\"https://notiz.blog/2008/11/12/microformats-in-zahlen/\">Microformats erfolgreich sind, war mir schon klar</a>&#x2026; ich bin nur der Meinung dass es langsam Zeit f&#xFC;r eine Weiterentwicklung ist &#x1F609;</p>",
+                                                "value": "Ich habe bei meinem WordPress Theme mal versucht Microformats 2 umzusetzen\u2026 Das gr\u00f6\u00dfte Probleme war f\u00fcr mich der Zusammenhang von Namespace und Datentyp\u2026 Ist der hAtom-Title jetzt e-entry-title oder p-entry-title\u2026\nDass Microformats erfolgreich sind, war mir schon klar\u2026 ich bin nur der Meinung dass es langsam Zeit f\u00fcr eine Weiterentwicklung ist \ud83d\ude09",
+                                                "lang": "de-DE"
+                                            }
+                                        ],
+                                        "author": [
+                                            {
+                                                "type": [
+                                                    "h-card"
+                                                ],
+                                                "properties": {
+                                                    "name": [
+                                                        "Matthias Pfefferle"
+                                                    ],
+                                                    "photo": [
+                                                        "https://secure.gravatar.com/avatar/75512bb584bbceae57dfc503692b16b2?s=40&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                                                    ],
+                                                    "url": [
+                                                        "https://notiz.blog"
+                                                    ]
+                                                },
+                                                "lang": "de-DE",
+                                                "value": "Matthias Pfefferle"
+                                            }
+                                        ],
+                                        "comment": [
+                                            {
+                                                "type": [
+                                                    "h-cite",
+                                                    "h-entry"
+                                                ],
+                                                "properties": {
+                                                    "summary": [
+                                                        "Naja, Du weisst ja: Mit Computer geht Alles viel schneller, es dauert nur etwas l\u00e4nger \ud83d\ude42"
+                                                    ],
+                                                    "name": [
+                                                        "Naja, Du weisst ja: Mit Computer geht Alles viel schneller, es dauert nur etwas l\u00e4nger \ud83d\ude42"
+                                                    ],
+                                                    "updated": [
+                                                        "2012-09-07T08:10:03+00:00"
+                                                    ],
+                                                    "published": [
+                                                        "2012-09-07T08:10:03+00:00"
+                                                    ],
+                                                    "content": [
+                                                        {
+                                                            "html": "<p>Naja, Du weisst ja: Mit Computer geht Alles viel schneller, es dauert nur etwas l&#xE4;nger &#x1F642;</p>",
+                                                            "value": "Naja, Du weisst ja: Mit Computer geht Alles viel schneller, es dauert nur etwas l\u00e4nger \ud83d\ude42",
+                                                            "lang": "de-DE"
+                                                        }
+                                                    ],
+                                                    "author": [
+                                                        {
+                                                            "type": [
+                                                                "h-card"
+                                                            ],
+                                                            "properties": {
+                                                                "name": [
+                                                                    "Siegfried"
+                                                                ],
+                                                                "photo": [
+                                                                    "https://secure.gravatar.com/avatar/a42e868fcda1bccf47ef7a48697b30ac?s=100&d=https://notiz.blog/wp-content/plugins/semantic-linkbacks/img/mm.jpg&r=g"
+                                                                ],
+                                                                "url": [
+                                                                    "http://www.rorkvell.de"
+                                                                ]
+                                                            },
+                                                            "lang": "de-DE",
+                                                            "value": "Siegfried"
+                                                        }
+                                                    ]
+                                                },
+                                                "lang": "de-DE",
+                                                "value": "Naja, Du weisst ja: Mit Computer geht Alles viel schneller, es dauert nur etwas l\u00e4nger \ud83d\ude42"
+                                            }
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "Ich habe bei meinem WordPress Theme mal versucht Microformats 2 umzusetzen\u2026 Das gr\u00f6\u00dfte Probleme war f\u00fcr mich der Zusammenhang von Namespace und Datentyp\u2026 Ist der hAtom-Title jetzt e-entry-title oder p-entry-title\u2026\nDass Microformats erfolgreich sind, war mir schon klar\u2026 ich bin nur der Meinung dass es langsam Zeit f\u00fcr eine Weiterentwicklung ist \ud83d\ude09"
+                                }
+                            ]
+                        },
+                        "lang": "de-DE",
+                        "value": "Ich habe jetzt noch mal einige Zeit dar\u00fcber nachgedacht und neige nun eher dazu, Dir zuzustimmen: Namespaces bei Microformats sind eher hinderlich. Die n\u00f6tige Flexibilit\u00e4t erreicht man ggf. \u00fcber RDFa und/oder Microdata.\nIch teste \u00fcbrigens gerade viele verschiedene HTML Versionen von Blogs auf Microformats. Die sind gar nicht mal so selten. Und bislang ausschlie\u00dflich ohne Prefix. Also \u201eplain old\u201c. Hat sich vielleicht doch mehr durchgesetzt, als Du derzeit vermutest."
+                    },
+                    {
+                        "type": [
+                            "h-cite",
+                            "h-entry"
+                        ],
+                        "properties": {
+                            "url": [
+                                "https://plus.google.com/+MatthiasPfefferle/posts/L5WoBry6JqH"
+                            ],
+                            "author": [
+                                {
+                                    "type": [
+                                        "h-card"
+                                    ],
+                                    "properties": {
+                                        "name": [
+                                            "Sebastian Lasse"
+                                        ],
+                                        "url": [
+                                            "https://profiles.google.com/108751138108005469822"
+                                        ],
+                                        "photo": [
+                                            "https://lh3.googleusercontent.com/-JberdLklCkk/AAAAAAAAAAI/AAAAAAAAAAA/jgElm9btNQg/photo.jpg?sz=50"
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "Sebastian Lasse"
+                                }
+                            ]
+                        },
+                        "lang": "de-DE",
+                        "value": "Sebastian Lasse"
+                    }
+                ],
+                "like": [
+                    {
+                        "type": [
+                            "h-cite",
+                            "h-entry"
+                        ],
+                        "properties": {
+                            "url": [
+                                "https://plus.google.com/+MatthiasPfefferle/posts/L5WoBry6JqH"
+                            ],
+                            "author": [
+                                {
+                                    "type": [
+                                        "h-card"
+                                    ],
+                                    "properties": {
+                                        "name": [
+                                            "Sebastian Lasse"
+                                        ],
+                                        "url": [
+                                            "https://profiles.google.com/108751138108005469822"
+                                        ],
+                                        "photo": [
+                                            "https://lh3.googleusercontent.com/-JberdLklCkk/AAAAAAAAAAI/AAAAAAAAAAA/jgElm9btNQg/photo.jpg?sz=50"
+                                        ]
+                                    },
+                                    "lang": "de-DE",
+                                    "value": "Sebastian Lasse"
+                                }
+                            ]
+                        },
+                        "lang": "de-DE",
+                        "value": "https://plus.google.com/+MatthiasPfefferle/posts/L5WoBry6JqH"
+                    }
+                ]
+            },
+            "lang": "de-DE"
+        }
+    ],
+    "rels": {
+        "profile": [
+            "http://microformats.org/profile/specs",
+            "http://microformats.org/profile/hatom"
+        ],
+        "pingback": [
+            "https://notiz.blog/xmlrpc.php"
+        ],
+        "stylesheet": [
+            "https://cdn.notiz.blog/wp-content/cache/autoptimize/css/autoptimize_2dbaf161c48904d712cf8124d1d59614.css",
+            "https://notiz.blog/wp-content/themes/zenpress/css/print.css?ver=1.0.0",
+            "https://notiz.blog/wp-content/themes/zenpress/css/narrow-width.css?ver=1.0.0",
+            "https://notiz.blog/wp-content/themes/zenpress/css/default-width.css?ver=1.0.0",
+            "https://notiz.blog/wp-content/themes/zenpress/css/wide-width.css?ver=1.0.0"
+        ],
+        "dns-prefetch": [
+            "https://notiz.blog"
+        ],
+        "alternate": [
+            "https://notiz.blog/feed/",
+            "https://notiz.blog/comments/feed/",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/feed/",
+            "https://notiz.blog/feed/as1/",
+            "https://notiz.blog/comments/feed/as1/",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/feed/as1/",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/feed/mf2/",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/feed/jf2/",
+            "https://notiz.blog/wp-api/oembed/1.0/embed?url=https%3A%2F%2Fnotiz.blog%2F2012%2F07%2F03%2Fmicroformats-the-next-generation%2F",
+            "https://notiz.blog/wp-api/oembed/1.0/embed?url=https%3A%2F%2Fnotiz.blog%2F2012%2F07%2F03%2Fmicroformats-the-next-generation%2F&format=xml",
+            "https://notiz.blog/feed/json/",
+            "http://openwebpodcast.de/feed/"
+        ],
+        "meta": [
+            "https://notiz.blog/apml"
+        ],
+        "http://oexchange.org/spec/0.8/rel/related-target": [
+            "https://notiz.blog/?oexchange=xrd"
+        ],
+        "https://api.w.org/": [
+            "https://notiz.blog/wp-api/"
+        ],
+        "EditURI": [
+            "https://notiz.blog/xmlrpc.php?rsd"
+        ],
+        "wlwmanifest": [
+            "https://notiz.blog/wp-includes/wlwmanifest.xml"
+        ],
+        "prev": [
+            "https://notiz.blog/2012/06/22/twitter-cards/"
+        ],
+        "next": [
+            "https://notiz.blog/2012/08/02/oautsch/"
+        ],
+        "canonical": [
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/"
+        ],
+        "shortlink": [
+            "https://notiz.blog/b/1CP"
+        ],
+        "authorization_endpoint": [
+            "https://notiz.blog/wp-api/indieauth/1.0/auth"
+        ],
+        "token_endpoint": [
+            "https://notiz.blog/wp-api/indieauth/1.0/token"
+        ],
+        "license": [
+            "http://creativecommons.org/licenses/by-sa/4.0/",
+            "http://creativecommons.org/licenses/by-sa/4.0/rdf"
+        ],
+        "manifest": [
+            "https://notiz.blog/wp-api/app/v1/web-manifest"
+        ],
+        "search": [
+            "https://notiz.blog/wp-api/opensearch/1.1/document"
+        ],
+        "amphtml": [
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/amp/"
+        ],
+        "icon": [
+            "https://notiz.blog/wp-content/uploads/2015/09/cropped-notizblog-logo-32x32.png",
+            "https://notiz.blog/wp-content/uploads/2015/09/cropped-notizblog-logo-192x192.png"
+        ],
+        "apple-touch-icon-precomposed": [
+            "https://notiz.blog/wp-content/uploads/2015/09/cropped-notizblog-logo-180x180.png"
+        ],
+        "micropub": [
+            "https://notiz.blog/?micropub=endpoint"
+        ],
+        "webmention": [
+            "https://notiz.blog/wp-api/webmention/1.0/endpoint"
+        ],
+        "http://webmention.org/": [
+            "https://notiz.blog/wp-api/webmention/1.0/endpoint"
+        ],
+        "home": [
+            "https://notiz.blog/"
+        ],
+        "bookmark": [
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/"
+        ],
+        "author": [
+            "https://notiz.blog/author/matthias-pfefferle/"
+        ],
+        "category": [
+            "https://notiz.blog/category/web/"
+        ],
+        "tag": [
+            "https://notiz.blog/category/web/",
+            "https://notiz.blog/tag/microformats/",
+            "https://notiz.blog/tag/mikroformate/",
+            "https://notiz.blog/tag/rdfa/",
+            "https://notiz.blog/tag/schema-org/",
+            "https://notiz.blog/tag/semantic-html/"
+        ],
+        "nofollow": [
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=182592#respond",
+            "https://notiz.blog",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=182596#respond",
+            "http://www.rorkvell.de",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=182620#respond",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=182625#respond",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=182626#respond",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=183987#respond",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=185155#respond",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=185102#respond",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=185156#respond",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=185166#respond",
+            "https://notiz.blog/2012/07/03/microformats-the-next-generation/#respond"
+        ],
+        "external": [
+            "https://notiz.blog",
+            "http://www.rorkvell.de"
+        ],
+        "me": [
+            "http://openwebpodcast.de/",
+            "http://12things.de/",
+            "http://ichmagrot.de/",
+            "https://plus.google.com/+MatthiasPfefferle?rel=author",
+            "http://twitter.com/pfefferle",
+            "https://www.bloglovin.com/blog/18821433/?claim=skshx5azbaf",
+            "https://www.crunchbase.com/person/matthias-pfefferle",
+            "https://github.com/pfefferle",
+            "https://indieweb.org/User:Notizblog.org",
+            "https://keybase.io/pfefferle",
+            "https://www.linkedin.com/in/pfefferle/",
+            "https://mastodon.social/@pfefferle",
+            "https://micro.blog/pfefferle",
+            "http://microformats.org/wiki/User:Pfefferle",
+            "https://www.npmjs.com/~pfefferle",
+            "https://packagist.org/packages/pfefferle/",
+            "http://www.slideshare.net/pfefferle",
+            "http://stackoverflow.com/cv/pfefferle",
+            "http://profiles.wordpress.org/pfefferle",
+            "https://www.xing.com/profile/Matthias_Pfefferle"
+        ],
+        "friend": [
+            "http://12sites.de/"
+        ],
+        "co-worker": [
+            "http://12sites.de/",
+            "http://screengui.de/"
+        ],
+        "colleague": [
+            "http://12sites.de/",
+            "http://mrtopf.de/",
+            "http://screengui.de/"
+        ],
+        "contact": [
+            "https://werd.io",
+            "http://adactio.com/",
+            "http://tantek.com",
+            "http://mrtopf.de/",
+            "http://hackr.de",
+            "http://www.schoenstoll.de"
+        ],
+        "met": [
+            "http://mrtopf.de/",
+            "http://www.schoenstoll.de"
+        ],
+        "acquaintance": [
+            "http://screengui.de/"
+        ],
+        "kin": [
+            "http://jonas-berg.de"
+        ],
+        "neighbor": [
+            "http://www.schoenstoll.de"
+        ],
+        "generator": [
+            "http://wordpress.org/"
+        ]
+    },
+    "rel-urls": {
+        "http://microformats.org/profile/specs": {
+            "rels": [
+                "profile"
+            ]
+        },
+        "http://microformats.org/profile/hatom": {
+            "rels": [
+                "profile"
+            ]
+        },
+        "https://notiz.blog/xmlrpc.php": {
+            "rels": [
+                "pingback"
+            ]
+        },
+        "https://cdn.notiz.blog/wp-content/cache/autoptimize/css/autoptimize_2dbaf161c48904d712cf8124d1d59614.css": {
+            "media": "all",
+            "type": "text/css",
+            "rels": [
+                "stylesheet"
+            ]
+        },
+        "https://notiz.blog": {
+            "text": "Matthias Pfefferle",
+            "rels": [
+                "dns-prefetch",
+                "external",
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/feed/": {
+            "title": "notiz.Blog \u00bb Feed",
+            "type": "application/rss+xml",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "https://notiz.blog/comments/feed/": {
+            "title": "notiz.Blog \u00bb Kommentar-Feed",
+            "type": "application/rss+xml",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/feed/": {
+            "title": "notiz.Blog \u00bb Microformats: The next generation Kommentar-Feed",
+            "type": "application/rss+xml",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "https://notiz.blog/apml": {
+            "title": "APML 0.6",
+            "type": "application/xml+apml",
+            "rels": [
+                "meta"
+            ]
+        },
+        "https://notiz.blog/feed/as1/": {
+            "title": "notiz.Blog \u00bb Activity-Streams Feed",
+            "type": "application/stream+json",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "https://notiz.blog/comments/feed/as1/": {
+            "title": "notiz.Blog \u00bb Activity-Streams Comments Feed ",
+            "type": "application/stream+json",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/feed/as1/": {
+            "title": "notiz.Blog \u00bb Microformats: The next generation Activity-Streams Comments Feed",
+            "type": "application/stream+json",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/feed/mf2/": {
+            "type": "application/mf2+json",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/feed/jf2/": {
+            "type": "application/jf2+json",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "https://notiz.blog/?oexchange=xrd": {
+            "type": "application/xrd+xml",
+            "rels": [
+                "http://oexchange.org/spec/0.8/rel/related-target"
+            ]
+        },
+        "https://notiz.blog/wp-content/themes/zenpress/css/print.css?ver=1.0.0": {
+            "media": "print",
+            "type": "text/css",
+            "rels": [
+                "stylesheet"
+            ]
+        },
+        "https://notiz.blog/wp-content/themes/zenpress/css/narrow-width.css?ver=1.0.0": {
+            "media": "(max-width: 800px)",
+            "type": "text/css",
+            "rels": [
+                "stylesheet"
+            ]
+        },
+        "https://notiz.blog/wp-content/themes/zenpress/css/default-width.css?ver=1.0.0": {
+            "media": "(min-width: 800px)",
+            "type": "text/css",
+            "rels": [
+                "stylesheet"
+            ]
+        },
+        "https://notiz.blog/wp-content/themes/zenpress/css/wide-width.css?ver=1.0.0": {
+            "media": "(min-width: 1000px)",
+            "type": "text/css",
+            "rels": [
+                "stylesheet"
+            ]
+        },
+        "https://notiz.blog/wp-api/": {
+            "rels": [
+                "https://api.w.org/"
+            ]
+        },
+        "https://notiz.blog/xmlrpc.php?rsd": {
+            "title": "RSD",
+            "type": "application/rsd+xml",
+            "rels": [
+                "EditURI"
+            ]
+        },
+        "https://notiz.blog/wp-includes/wlwmanifest.xml": {
+            "type": "application/wlwmanifest+xml",
+            "rels": [
+                "wlwmanifest"
+            ]
+        },
+        "https://notiz.blog/2012/06/22/twitter-cards/": {
+            "text": "\u00ab",
+            "title": "Twitter Cards",
+            "rels": [
+                "prev"
+            ]
+        },
+        "https://notiz.blog/2012/08/02/oautsch/": {
+            "text": "\u00bb",
+            "title": "OAut(sc)h",
+            "rels": [
+                "next"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/": {
+            "title": "Permalink to Microformats: The next generation",
+            "text": "\n\t\t\t\tMicroformats: The next generation\t\t\t",
+            "rels": [
+                "bookmark",
+                "canonical"
+            ]
+        },
+        "https://notiz.blog/b/1CP": {
+            "rels": [
+                "shortlink"
+            ]
+        },
+        "https://notiz.blog/wp-api/oembed/1.0/embed?url=https%3A%2F%2Fnotiz.blog%2F2012%2F07%2F03%2Fmicroformats-the-next-generation%2F": {
+            "type": "application/json+oembed",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "https://notiz.blog/wp-api/oembed/1.0/embed?url=https%3A%2F%2Fnotiz.blog%2F2012%2F07%2F03%2Fmicroformats-the-next-generation%2F&format=xml": {
+            "type": "text/xml+oembed",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "https://notiz.blog/wp-api/indieauth/1.0/auth": {
+            "rels": [
+                "authorization_endpoint"
+            ]
+        },
+        "https://notiz.blog/wp-api/indieauth/1.0/token": {
+            "rels": [
+                "token_endpoint"
+            ]
+        },
+        "https://notiz.blog/feed/json/": {
+            "title": "JSON Feed",
+            "type": "application/json",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "http://creativecommons.org/licenses/by-sa/4.0/": {
+            "type": "text/html",
+            "rels": [
+                "license"
+            ]
+        },
+        "http://creativecommons.org/licenses/by-sa/4.0/rdf": {
+            "type": "application/rdf+xml",
+            "rels": [
+                "license"
+            ]
+        },
+        "https://notiz.blog/wp-api/app/v1/web-manifest": {
+            "rels": [
+                "manifest"
+            ]
+        },
+        "https://notiz.blog/wp-api/opensearch/1.1/document": {
+            "title": "Search notiz.Blog",
+            "type": "application/opensearchdescription+xml",
+            "rels": [
+                "search"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/amp/": {
+            "rels": [
+                "amphtml"
+            ]
+        },
+        "https://notiz.blog/wp-content/uploads/2015/09/cropped-notizblog-logo-32x32.png": {
+            "rels": [
+                "icon"
+            ]
+        },
+        "https://notiz.blog/wp-content/uploads/2015/09/cropped-notizblog-logo-192x192.png": {
+            "rels": [
+                "icon"
+            ]
+        },
+        "https://notiz.blog/wp-content/uploads/2015/09/cropped-notizblog-logo-180x180.png": {
+            "rels": [
+                "apple-touch-icon-precomposed"
+            ]
+        },
+        "https://notiz.blog/?micropub=endpoint": {
+            "rels": [
+                "micropub"
+            ]
+        },
+        "https://notiz.blog/wp-api/webmention/1.0/endpoint": {
+            "rels": [
+                "http://webmention.org/",
+                "webmention"
+            ]
+        },
+        "https://notiz.blog/": {
+            "title": "notiz.Blog",
+            "text": "\n\t\t\t\tnotiz.Blog\t\t\t\t",
+            "rels": [
+                "home"
+            ]
+        },
+        "https://notiz.blog/author/matthias-pfefferle/": {
+            "title": "View all posts by Matthias Pfefferle",
+            "text": "Matthias Pfefferle",
+            "rels": [
+                "author"
+            ]
+        },
+        "https://notiz.blog/category/web/": {
+            "text": "Open Web",
+            "rels": [
+                "category",
+                "tag"
+            ]
+        },
+        "https://notiz.blog/tag/microformats/": {
+            "text": "Microformats",
+            "rels": [
+                "tag"
+            ]
+        },
+        "https://notiz.blog/tag/mikroformate/": {
+            "text": "Mikroformate",
+            "rels": [
+                "tag"
+            ]
+        },
+        "https://notiz.blog/tag/rdfa/": {
+            "text": "RDFa",
+            "rels": [
+                "tag"
+            ]
+        },
+        "https://notiz.blog/tag/schema-org/": {
+            "text": "Schema.org",
+            "rels": [
+                "tag"
+            ]
+        },
+        "https://notiz.blog/tag/semantic-html/": {
+            "text": "Semantic HTML",
+            "rels": [
+                "tag"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=182592#respond": {
+            "text": "Antworten",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=182596#respond": {
+            "text": "Antworten",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "http://www.rorkvell.de": {
+            "text": "Siegfried",
+            "rels": [
+                "external",
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=182620#respond": {
+            "text": "Antworten",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=182625#respond": {
+            "text": "Antworten",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=182626#respond": {
+            "text": "Antworten",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=183987#respond": {
+            "text": "Antworten",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=185155#respond": {
+            "text": "Antworten",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=185102#respond": {
+            "text": "Antworten",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=185156#respond": {
+            "text": "Antworten",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/?replytocom=185166#respond": {
+            "text": "Antworten",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "https://notiz.blog/2012/07/03/microformats-the-next-generation/#respond": {
+            "text": "Antworten abbrechen",
+            "rels": [
+                "nofollow"
+            ]
+        },
+        "http://openwebpodcast.de/": {
+            "text": "Seite besuchen",
+            "rels": [
+                "me"
+            ]
+        },
+        "http://openwebpodcast.de/feed/": {
+            "text": "Den RSS-Feed abonnieren",
+            "rels": [
+                "alternate"
+            ]
+        },
+        "http://12sites.de/": {
+            "title": "Deine Homepage in Minuten",
+            "text": "12Sites",
+            "rels": [
+                "co-worker",
+                "colleague",
+                "friend"
+            ]
+        },
+        "http://12things.de/": {
+            "title": "12Things",
+            "text": "12Things",
+            "rels": [
+                "me"
+            ]
+        },
+        "http://ichmagrot.de/": {
+            "text": "ich mag rot",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://werd.io": {
+            "text": "Ben Werdm\u00fcller",
+            "rels": [
+                "contact"
+            ]
+        },
+        "http://adactio.com/": {
+            "text": "Jeremy Keith",
+            "rels": [
+                "contact"
+            ]
+        },
+        "http://tantek.com": {
+            "text": "Tantek \u00c7elik",
+            "rels": [
+                "contact"
+            ]
+        },
+        "http://mrtopf.de/": {
+            "text": "Christian Scholz",
+            "rels": [
+                "colleague",
+                "contact",
+                "met"
+            ]
+        },
+        "http://screengui.de/": {
+            "text": "Das Screenguide Magazin",
+            "rels": [
+                "acquaintance",
+                "co-worker",
+                "colleague"
+            ]
+        },
+        "http://hackr.de": {
+            "text": "hackr",
+            "rels": [
+                "contact"
+            ]
+        },
+        "http://jonas-berg.de": {
+            "text": "Jonas Berg",
+            "rels": [
+                "kin"
+            ]
+        },
+        "http://www.schoenstoll.de": {
+            "title": "Meine \u00fcberaus talentierte Vermieterin\u2026",
+            "text": "Malerin und Lyrikerin",
+            "rels": [
+                "contact",
+                "met",
+                "neighbor"
+            ]
+        },
+        "https://plus.google.com/+MatthiasPfefferle?rel=author": {
+            "text": "+Matthias Pfefferle",
+            "rels": [
+                "me"
+            ]
+        },
+        "http://twitter.com/pfefferle": {
+            "text": "@pfefferle",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://www.bloglovin.com/blog/18821433/?claim=skshx5azbaf": {
+            "text": "Bloglovin",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://www.crunchbase.com/person/matthias-pfefferle": {
+            "text": "CrunchBase",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://github.com/pfefferle": {
+            "text": "GitHub",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://indieweb.org/User:Notizblog.org": {
+            "text": "IndieWeb",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://keybase.io/pfefferle": {
+            "text": "Keybase",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://www.linkedin.com/in/pfefferle/": {
+            "text": "LinkedIN",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://mastodon.social/@pfefferle": {
+            "text": "Mastodon",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://micro.blog/pfefferle": {
+            "text": "Micro.blog",
+            "rels": [
+                "me"
+            ]
+        },
+        "http://microformats.org/wiki/User:Pfefferle": {
+            "text": "Microformats",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://www.npmjs.com/~pfefferle": {
+            "text": "npm",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://packagist.org/packages/pfefferle/": {
+            "text": "Packagist",
+            "rels": [
+                "me"
+            ]
+        },
+        "http://www.slideshare.net/pfefferle": {
+            "text": "SlideShare",
+            "rels": [
+                "me"
+            ]
+        },
+        "http://stackoverflow.com/cv/pfefferle": {
+            "text": "Stack Overflow",
+            "rels": [
+                "me"
+            ]
+        },
+        "http://profiles.wordpress.org/pfefferle": {
+            "title": "my WordPress.org profile",
+            "text": "WordPress",
+            "rels": [
+                "me"
+            ]
+        },
+        "https://www.xing.com/profile/Matthias_Pfefferle": {
+            "text": "XING",
+            "rels": [
+                "me"
+            ]
+        },
+        "http://wordpress.org/": {
+            "text": "WordPress",
+            "rels": [
+                "generator"
+            ]
+        }
+    },
+    "debug": {
+        "package": "https://packagist.org/packages/mf2/mf2",
+        "source": "https://github.com/indieweb/php-mf2",
+        "version": "0.4.6",
+        "note": [
+            "This output was generated from the php-mf2 library available at https://github.com/indieweb/php-mf2",
+            "Please file any issues with the parser at https://github.com/indieweb/php-mf2/issues",
+            "Using the Masterminds HTML5 parser"
+        ]
+    }
+}
