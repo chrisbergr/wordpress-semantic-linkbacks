@@ -238,6 +238,8 @@ function list_linkbacks( $args, $comments ) {
 }
 
 
+$semantic_linkbacks_template_location_cache = array();
+
 /**
  * Returns the path to a template file
  *
@@ -255,26 +257,25 @@ function list_linkbacks( $args, $comments ) {
  * @param 	string 		$name 			The name of a template file
  * @return 	string 						The path to the template
  */
-function semantic_linkbacks_get_template( $name ) {
+function semantic_linkbacks_get_template_path( $name ) {
 
-	$template = '';
+	$template_path = '';
 
 	$locations[] = "/semantic-linkbacks/{$name}.php";
 	apply_filters( 'semantic-linkbacks-template-paths', $locations );
 
-	$template = locate_template( $locations, false );
+	$template_path = locate_template( $locations, false );
 
-	if ( empty( $template ) ) {
-		$template_temp = plugin_dir_path( dirname( __FILE__ ) ) . 'templates/' . $name . '.php';
-		if ( file_exists( $template_temp ) ) {
-			$template = $template_temp;
+	if ( empty( $template_path ) ) {
+		$plugin_template_path = plugin_dir_path( dirname( __FILE__ ) ) . "templates/{$name}.php";
+		if ( file_exists( $plugin_template_path ) ) {
+			$template_path = $plugin_template_path;
 		}
 	}
 
-	return $template;
+	return $template_path;
 
-} // semantic_linkbacks_get_template()
-
+} // semantic_linkbacks_get_template_path()
 
 /**
  * Loads a template file
@@ -282,13 +283,29 @@ function semantic_linkbacks_get_template( $name ) {
  * @param 	string 		$name 			The name of a template file
  * @param 	string 		$sub 			The name of a template sub file
  */
-function semantic_linkbacks_load_template( $name, $sub = '' ) {
+function semantic_linkbacks_load_template( $name, $sub = false ) {
 
-	$template = semantic_linkbacks_get_template( $name . '-' . $sub );
+	global $semantic_linkbacks_template_location_cache;
+
+	if ( $sub ) {
+		$template_name = "{$name}-{$sub}";
+	} else {
+		$template_name = $name;
+	}
+
+	if ( isset ( $semantic_linkbacks_template_location_cache[$template_name] ) ) {
+		load_template( $semantic_linkbacks_template_location_cache[$template_name], false );
+		print_r($semantic_linkbacks_template_location_cache);
+		return;
+	}
+
+	$template = semantic_linkbacks_get_template_path( $template_name );
 
 	if ( empty( $template ) ) {
-		$template = semantic_linkbacks_get_template( $name );
+		$template = semantic_linkbacks_get_template_path( $name );
 	}
+
+	$semantic_linkbacks_template_location_cache[$template_name] = $template;
 
 	load_template( $template, false );
 
