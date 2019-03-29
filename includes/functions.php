@@ -295,7 +295,6 @@ function semantic_linkbacks_load_template( $name, $sub = false ) {
 
 	if ( isset ( $semantic_linkbacks_template_location_cache[$template_name] ) ) {
 		load_template( $semantic_linkbacks_template_location_cache[$template_name], false );
-		print_r($semantic_linkbacks_template_location_cache);
 		return;
 	}
 
